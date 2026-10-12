@@ -1,0 +1,15 @@
+FixClever 1.2.0 – GitHub-Integrationspaket
+
+ZIP entpacken und alle Dateien INKLUSIVE .github/ in die GitHub-Repository-Wurzel hochladen.
+GitHub Actions muss erlaubt sein und Schreibzugriff auf das Repository haben.
+Danach unter GitHub > Actions Workflow "FixClever Update integrieren" prüfen, bei Bedarf "Run workflow" ausführen.
+Der Workflow ergänzt die Skripte in index.html und committed sie.
+Ohne erfolgreichen Workflow ist das Update NICHT aktiv.
+
+Alternativ: Alle Dateien zusammen mit dem existierenden Repo lokal speichern,
+python3 install_update.py ausführen und die geänderte index.html hochladen.
+
+Enthält vier neue Fächer mit je einem Beispielthema und zehn Fragen (40 neu), je 5 Beispielen.
+Die 150 älteren Themen haben noch jeweils ein Beispiel. Vollständiger NRW-Lehrplan NICHT umgesetzt.
+Update-Prüfung kann Versionsdatei auslesen, nicht automatisch Dateien installieren.
+Bestehende Daten in localStorage werden nicht verändert.

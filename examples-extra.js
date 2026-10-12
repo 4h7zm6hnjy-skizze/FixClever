@@ -1,0 +1,2 @@
+/* Fünf Beispiele für die vier neuen Themen. */
+(function(){const original=renderReader;renderReader=function(){original();const l=state.lesson;if(!l||!Array.isArray(l.examples)||l.examples.length<2)return;const e=document.querySelector('#reader .example-box');if(!e)return;const h=document.createElement('h3');h.textContent='Fünf Beispiele zum Verstehen';const ol=document.createElement('ol');l.examples.slice(0,5).forEach(t=>{const li=document.createElement('li');li.textContent=t;ol.appendChild(li)});e.replaceChildren(h,ol);};})();
