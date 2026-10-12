@@ -1,0 +1,20 @@
+FixClever – Ergänzung 1.2.0 (Teilupdate)
+
+Diese ZIP enthält nur Ergänzungsdateien; sie ersetzt NICHT die bestehende vollständige Webapp. Für Installation Dateien im Hauptverzeichnis des GitHub-Repositories hochladen und index.html anpassen:
+
+Im HEAD nach questions.js und VOR app.js einfügen:
+<script src="curriculum-extra.js?v=1.2.0" defer></script>
+
+Nach app.js und VOR quiz.js einfügen:
+<script src="subjects-extra.js?v=1.2.0" defer></script>
+
+Nach quiz.js einfügen:
+<script src="update-check.js?v=1.2.0" defer></script>
+
+In index.html die übrigen ?v=1.1.0 auf ?v=1.2.0 ändern.
+
+Der Versionsknopf prüft nur version.json auf dem Webserver und lädt bei Zustimmung die Seite neu. Es erfolgt KEINE selbstständige Installation neuer Dateien. Die version.json bei jedem veröffentlichten Update mit dem tatsächlichen Versionsstand pflegen.
+
+Umfang: 4 neue Themen, 40 Übungsfragen (mit einfachen, noch redaktionell zu vertiefenden Fragestellungen), je 5 Beispiele in den Daten. Die bestehende Leseansicht zeigt weiterhin nur das Feld `example`, also das erste Beispiel; für eine sichtbare Ausgabe aller fünf muss renderReader in app.js angepasst werden. Es handelt sich ausdrücklich noch nicht um die vollständige 1.-10.-Klasse-Fächerabdeckung.
+
+Bestehende Profile und Daten werden nicht entfernt. Vor Aktualisierungen dennoch Statistik-Backup exportieren. Keine vollständige Browser-End-to-End-Prüfung durchgeführt.
