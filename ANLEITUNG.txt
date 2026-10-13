@@ -1,15 +1,11 @@
-FixClever 1.9.2 – Geschichte als Zeitreise
+FixClever Version 1.9.3 – Musik-Werkstatt + vollständig offline
 
-1. ZIP-Datei entpacken.
-2. Genau diese drei Dateien in die Wurzel deines GitHub-Repositories FixClever hochladen und dort die bisherigen Dateien ersetzen:
-   - index.html
-   - sw.js
-   - manifest.webmanifest
-3. Alle sonstigen Dateien auf GitHub unverändert lassen, besonders die Logo-Dateien sowie lessons.js, questions.js und app.js.
-4. App einmal mit Internet aufrufen und warten, bis sie ihre Offline-Dateien gespeichert hat.
-5. Geschichte unter Klasse 5–10 öffnen. In einer neuen Lektion lässt sich mit der Epochenauswahl auch zu Themen aus anderen Klassen wechseln.
-6. Offline-Test im Flugmodus durchführen.
+In GitHub im Stammverzeichnis die drei Dateien index.html, sw.js und manifest.webmanifest durch die Dateien aus diesem Paket ersetzen. Weitere Dateien und Logos unverändert lassen.
 
-Neu: 66 Geschichte-Themen mit jeweils fünf Beispielen und zehn Zuordnungsfragen.
-Insgesamt nun 474 Lernthemen. Das ist eine NRW-orientierte Sammlung, keine amtlich bestätigte Vollständigkeit.
-Vorhandene Benutzerprofile, Sterne und Tests werden nicht gelöscht.
+Einmal online laden und warten, bis die Offline-Meldung erscheint. Danach die Musik-Werkstatt unter dem Fach Musik öffnen.
+
+Die Kinderprofile, Lernergebnisse und bereits gespeicherten Unterrichtsthemen bleiben unverändert.
+
+Neue Inhalte: 128 eigenständige Musik-Lektionen, 1280 Testfragen und interaktive Offline-Musik-Werkstatt.
+
+Wichtiger Hinweis: Ein AudioContext benötigt eventuell eine direkte Bildschirmberührung, um Ton zu spielen. Die App benötigt kein Netzwerk für die Tonausgabe. Die historischen Musikdaten und die Lehrplanabdeckung sind keine offizielle NRW-Zertifizierung.
