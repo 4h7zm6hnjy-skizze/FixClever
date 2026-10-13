@@ -1,14 +1,29 @@
-FixClever 2.3.3 – START- UND OFFLINE-REPARATUR
+FIXCLEVER – STARTREPARATUR (Hotfix fuer den Lade-Stopp bei fc231-tests.js)
 
-Auf GitHub (Repository FixClever, Branch main) bitte alle VIER Dateien im ZIP
-auf der Hauptebene hochladen:
-  1. index.html (ersetzen)
-  2. sw.js (ersetzen)
-  3. manifest.webmanifest (ersetzen)
-  4. fc233-lernhilfen.js (NEU hinzufügen)
+GitHub-Repository:
+https://github.com/4h7zm6hnjy-skizze/FixClever
 
-Alle bisherigen fc231-*.js-Dateien sowie lessons.js, questions.js, app.js usw. bleiben erhalten.
-Zum Aktualisieren einmal online Safari öffnen, Offline speichern / prüfen drücken,
-danach die Seite ein zweites Mal neu öffnen. Die neue App zeigt den Ladefortschritt an.
-Keine Browserdaten löschen und die Home-Bildschirm-App nicht löschen, um die
-lokalen Lernprofile und Ergebnisse nicht zu verlieren.
+1. ZIP auf dem iPhone/Mac entpacken. In GitHub das Repository FixClever oeffnen.
+2. Add file -> Upload files (Dateien hochladen) waehlen.
+3. BEIDE Dateien aus diesem Ordner direkt ins HAUPTVERZEICHNIS hochladen:
+   - fc231-tests.js (bestehende Datei ersetzen)
+   - repair.html (neu)
+   Keine Unterordner anlegen.
+4. Commit changes klicken und warten, bis GitHub Pages neu bereitsteht.
+5. Bei GitHub Pages im Browser DIESE Adresse einmal oeffnen:
+   https://4h7zm6hnjy-skizze.github.io/FixClever/repair.html
+   Dort auf 'FixClever oeffnen' tippen.
+6. Die Faecher und Testbereiche erneut pruefen.
+
+WARUM:
+Die alte fc231-tests.js sortiert fuer viele Aufgaben die gesamten falschen
+Antworten mehrfach. Die neue Version nutzt einen vorberechneten Suchindex
+und begrenzt die Suche. Sie behaelt das vorhandene Quiz-, Profil- und
+Lernsterne-System bei. Reparaturseite leert nur den Dateicache, keine
+Lernprofile, lokale Testergebnisse oder andere Benutzerdaten.
+
+WICHTIG:
+Das ist ein gezielter Start-Fix fuer Version 2.3.3 und KEINE vollstaendige
+Funktionszertifizierung aller Unterrichtsinhalte. Der GitHub-Schreibzugriff
+wurde vom verbundenen Konto mit Fehler 403 abgelehnt; ein automatischer
+Upload war deshalb nicht moeglich.

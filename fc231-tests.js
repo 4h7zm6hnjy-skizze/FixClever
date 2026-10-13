@@ -1,9 +1,7 @@
-/* FixClever 2.3.1 – lokal zwischengespeicherte Programmdatei; keine Netzwerk-Abhaengigkeiten. */
-
-/* FixClever 2.3.1: Zehn Antwortoptionen und lokale Lernbelohnungen. */
+/* FixClever 2.3.3 performance hotfix (2026-10-13).
+   Ersetzt ausschliesslich die blockierende Aufgabenaufbereitung; vorhandene Daten bleiben erhalten. */
 (()=>{
 'use strict';
-// Existing stored tests use the old answers; retain their exact original data.
 const ORIGINAL={};
 for(const [id,items] of Object.entries(QUESTIONS)) ORIGINAL[id]=items.map(q=>({...q,options:[...q.options]}));
 const lessonFor=new Map(LESSONS.map(l=>[l.id,l]));
@@ -11,7 +9,7 @@ const rows=[];
 for(const [lessonId,bank] of Object.entries(ORIGINAL)){
  if(lessonId.startsWith('fc15_')||lessonId.startsWith('fc16_'))continue;
  const lesson=lessonFor.get(lessonId);if(!lesson)continue;
- for(const q of bank) rows.push({lessonId,subject:lesson.subject,grade:lesson.grade,q});
+ for(const q of bank)rows.push({lessonId,subject:lesson.subject,grade:lesson.grade,q});
 }
 const binary=q=>q.options.length===2&&q.options.includes('Stimmt')&&q.options.includes('Stimmt nicht');
 const claim=q=>String(q.prompt).replace(/^\s*Stimmt\s+das\?\s*/i,'').trim();
@@ -20,13 +18,49 @@ const FALSE=rows.filter(x=>binary(x.q)&&x.q.options[x.q.answer]==='Stimmt nicht'
 const TRUE=rows.filter(x=>binary(x.q)&&x.q.options[x.q.answer]==='Stimmt').map(x=>({...x,text:claim(x.q)}));
 const WRONG=rows.flatMap(x=>binary(x.q)?[]:x.q.options.filter((v,i)=>i!==x.q.answer).map(text=>({...x,text:String(text)})));
 function uniq(arr,text,seen){const t=String(text||'').trim(),k=norm(t);if(!k||seen.has(k))return false;seen.add(k);arr.push(t);return true;}
-// Keep pools subject-nearby but rotate candidates between questions to avoid a fixed correct position.
-function rank(pool,x){const salt=[...x.q.id].reduce((n,c)=>Math.imul(n,31)+c.charCodeAt(0)|0,0)>>>0;
- return pool.filter(v=>v.q.id!==x.q.id).map(v=>({v,rank:(v.lessonId===x.lessonId?1000:0)+(v.subject===x.subject?450:0)+(v.grade===x.grade?140:0)+(Math.abs(v.grade-x.grade)===1?35:0)+(v.q.id===x.q.id?-999:0),tie:((salt ^ ([...v.q.id].reduce((n,c)=>Math.imul(n,33)+c.charCodeAt(0)|0,0)))>>>0)}))
- .sort((a,b)=>b.rank-a.rank||a.tie-b.tie).map(x=>x.v);
-}
 function numericPattern(text){const m=String(text).trim().match(/^([−+\-]?\d+(?:[.,]\d+)?)(\s*(?:%|€|cm|mm|km|m|kg|g|mg|ml|l|h|min|s|°|m²|cm²)?)$/i);return m||null;}
-function numericWrong(correct){const m=numericPattern(correct);if(!m)return [];
+function shape(str){const s=String(str).trim();if(numericPattern(s))return 'numeric';if(/^\d+\s+Rest\s+\d+$/i.test(s))return 'remainder';if(s.length<35&&!/[.!?]/.test(s))return 'short';return 'phrase';}
+// Previous implementation re-sorted every distractor in every test question.
+// That is quadratic and can freeze iOS Safari. Here we index once per pool.
+const rankCache=new WeakMap();
+function rank(pool,x,wantedShape){
+ let index=rankCache.get(pool);
+ if(!index){
+  index={lesson:new Map(),subjectGrade:new Map(),subject:new Map(),grade:new Map(),shape:new Map(),all:pool};
+  const add=(m,k,v)=>{let group=m.get(k);if(!group){group=[];m.set(k,group);}group.push(v);};
+  for(const v of pool){
+   add(index.lesson,v.lessonId,v);
+   add(index.subjectGrade,v.subject+'|'+v.grade,v);
+   add(index.subject,v.subject,v);
+   add(index.grade,v.grade,v);
+   add(index.shape,shape(v.text),v);
+  }
+  rankCache.set(pool,index);
+ }
+ const seed=[...String(x.q.id)].reduce((n,c)=>(Math.imul(n,31)+c.charCodeAt(0))>>>0,2166136261);
+ const candidates=[],visited=new Set(),limit=96;
+ function add(group,maxScan){
+  if(!group||candidates.length>=limit)return;
+  const start=seed%group.length,scans=Math.min(group.length,maxScan);
+  for(let k=0;k<scans&&candidates.length<limit;k++){
+   const v=group[(start+k)%group.length];
+   if(v.q.id===x.q.id||visited.has(v))continue;
+   if(wantedShape&&shape(v.text)!==wantedShape)continue;
+   visited.add(v);candidates.push(v);
+  }
+ }
+ add(index.lesson.get(x.lessonId),64);
+ add(index.subjectGrade.get(x.subject+'|'+x.grade),96);
+ add(index.subjectGrade.get(x.subject+'|'+(x.grade-1)),32);
+ add(index.subjectGrade.get(x.subject+'|'+(x.grade+1)),32);
+ add(index.subject.get(x.subject),128);
+ add(index.grade.get(x.grade),64);
+ if(wantedShape)add(index.shape.get(wantedShape),128);
+ add(index.all,128);
+ return candidates;
+}
+function numericWrong(correct){
+ const m=numericPattern(correct);if(!m)return [];
  const val=Number(m[1].replace('−','-').replace(',','.'));if(!Number.isFinite(val))return [];
  const fmt=m[1].includes(',')?',':m[1].includes('.')?'.':null,dp=fmt?m[1].split(fmt)[1].length:0,step=Math.pow(10,-dp);
  return [-1,1,-2,2,-3,3,-4,4,-5,5,-6,6,-8,8,-10,10,-12,12,-15,15].map(delta=>{
@@ -34,20 +68,19 @@ function numericWrong(correct){const m=numericPattern(correct);if(!m)return [];
   return (dp?n.toFixed(dp).replace('.',fmt):String(n))+m[2];
  }).filter(Boolean);
 }
-function remainderWrong(correct){const m=String(correct).trim().match(/^(\d+)\s+Rest\s+(\d+)$/i);if(!m)return [];
- const a=Number(m[1]),b=Number(m[2]);const out=[];
+function remainderWrong(correct){
+ const m=String(correct).trim().match(/^(\d+)\s+Rest\s+(\d+)$/i);if(!m)return [];
+ const a=Number(m[1]),b=Number(m[2]),out=[];
  for(const dx of [-1,1,-2,2,-3,3,4])for(const dy of [-1,1,2,-2,3])if(a+dx>=0&&b+dy>=0)out.push(`${a+dx} Rest ${b+dy}`);
  return out;
 }
-function shape(str){const s=String(str).trim();if(numericPattern(s))return 'numeric';if(/^\d+\s+Rest\s+\d+$/i.test(s))return 'remainder';if(s.length<35&&!/[.!?]/.test(s))return 'short';return 'phrase';}
-const unresolved=[],selfContradictions=[];
+const unresolved=[];
 for(const x of rows){
  const q=x.q,correct=q.options[q.answer],opts=[],seen=new Set();let answer=0,prompt=q.prompt;
  if(q.id==='nrw13_16q5'){
   for(const v of ['¿','!',';','¡','?',':','«','»','.','—'])uniq(opts,v,seen);
   answer=0;
  }else if(binary(q)){
-  // Original false claims are available as documented distractors. Do not invent assertions.
   let chosenCorrect=q.options[q.answer]==='Stimmt'?claim(q):String(q.explanation).trim();
   if(chosenCorrect.length<10||/^(?:das|diese|sie|er|es|hier|nein|ja|falsch|richtig)\b/i.test(chosenCorrect)||!/[.?!]$/.test(chosenCorrect)){
    chosenCorrect=rank(TRUE,x).find(v=>v.lessonId===x.lessonId)?.text||rank(TRUE,x)[0]?.text||chosenCorrect;
@@ -55,26 +88,23 @@ for(const x of rows){
   uniq(opts,chosenCorrect,seen);
   for(const candidate of rank(FALSE,x)){
    if(opts.length>=10)break;
-   const val=candidate.text;
-   if(norm(val)===norm(chosenCorrect))continue;
-   uniq(opts,val,seen);
+   if(norm(candidate.text)===norm(chosenCorrect))continue;
+   uniq(opts,candidate.text,seen);
   }
   prompt='Welche Aussage ist richtig?';
  }else{
-  const prior=q.options.map(String);for(const value of prior)uniq(opts,value,seen);
+  for(const value of q.options.map(String))uniq(opts,value,seen);
   answer=opts.findIndex(v=>norm(v)===norm(correct));
   const sig=shape(correct);
-  if(sig==='numeric'||sig==='remainder')for(const v of (sig==='numeric'?numericWrong(correct):remainderWrong(correct))){if(opts.length>=10)break;uniq(opts,v,seen);}
-  if(opts.length<10)for(const candidate of rank(WRONG,x)){
+  if(sig==='numeric'||sig==='remainder')for(const v of(sig==='numeric'?numericWrong(correct):remainderWrong(correct))){if(opts.length>=10)break;uniq(opts,v,seen);}
+  if(opts.length<10)for(const candidate of rank(WRONG,x,sig)){
    if(opts.length>=10)break;
-   if(shape(candidate.text)!==sig)continue;
    if(sig==='short'){
     const ratio=candidate.text.length/Math.max(1,String(correct).length);
     if(ratio>2.5||ratio<0.35)continue;
    }
    uniq(opts,candidate.text,seen);
   }
-  // If same-shaped distractors are insufficient, keep original question unmodified rather than add nonsense.
  }
  if(opts.length===10&&new Set(opts.map(norm)).size===10&&answer>=0&&answer<10){
   if(binary(q))answer=0;
@@ -82,7 +112,7 @@ for(const x of rows){
   live.prompt=prompt;live.options=[...opts];live.answer=answer;
  }else unresolved.push(q.id);
 }
-// Never silently drop older tests: the original and expanded choices are both accepted.
+// Preserve previously saved quiz answers and existing child profiles.
 cleanAttempt=function(a){
  if(!a||!validIds.has(a.lessonId)||!Number.isInteger(a.correct)||a.correct<0||a.correct>10||a.total!==10||!Number.isFinite(Date.parse(a.date))||!Array.isArray(a.answers)||a.answers.length!==10)return null;
  const old=ORIGINAL[a.lessonId],now=QUESTIONS[a.lessonId];if(!old||!now)return null;
@@ -99,7 +129,6 @@ cleanAttempt=function(a){
  if(correct!==a.correct)return null;
  return {id:String(a.id),lessonId:a.lessonId,date:a.date,total:10,correct,answers:a.answers.map(x=>({questionId:x.questionId,selected:x.selected}))};
 };
-// quiz.js initially reads profiles before the enhancement; reread them using the compatible validator.
 profileData=loadProfiles();applyChild();profileButton();
 const priorResult=showResult;
 showResult=function(a,stored){
@@ -112,13 +141,10 @@ renderQuiz=function(){prevRender();const note=document.querySelector('#quiz-area
 const priorReader=renderReader;
 renderReader=function(){priorReader();const p=document.querySelector('#reader .test-invite p');if(p)p.textContent=p.textContent.replace('10 Aufgaben','10 Aufgaben · jeweils 10 Antwortmöglichkeiten');};
 window.FixCleverAnswerAudit=Object.freeze({total:rows.length,tenChoices:rows.length-unresolved.length,pending:unresolved.slice(),revisionsRequireReview:true});
-if(unresolved.length)console.warn('Noch nicht auf 10 Antwortmöglichkeiten erweiterbar:',unresolved);
+if(unresolved.length)console.warn('Einige Aufgaben bleiben bei der vorhandenen Antwortzahl. Anzahl:',unresolved.length,'Beispiele:',unresolved.slice(0,10));
 })();
 
-
-;
-
-/* FixClever 2.3.1 – Lernsterne & Abzeichen, nur lokal aus den vorhandenen Testergebnissen. */
+/* Lernsterne & Abzeichen: unchanged rules, data remains only in local browser storage. */
 (()=>{
  'use strict';
  function info(){
@@ -190,5 +216,3 @@ if(unresolved.length)console.warn('Noch nicht auf 10 Antwortmöglichkeiten erwei
  };
  window.FixCleverRewardsAudit=()=>{const a=info();return {stars:a.stars,earnedBadges:a.goals.filter(x=>x.done).map(x=>x.id),count:a.attempts.length}};
 })();
-
-
