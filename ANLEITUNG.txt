@@ -1,23 +1,14 @@
-FixClever 2.3.1 – Startreparatur / schneller Offline-Start
+FixClever 2.3.2 – korrigierter Seitenaufbau
 
-Wichtig: Bitte ALLE SIEBEN Programmdateien aus dem ZIP in das Stammverzeichnis deines GitHub-Projekts hochladen; nur drei alte Dateien zu ersetzen reicht diesmal nicht.
+NUR diese drei Dateien im GitHub-Repo ersetzen:
+- index.html
+- sw.js
+- manifest.webmanifest
 
-Dateien:
-- index.html (ersetzen)
-- sw.js (ersetzen)
-- manifest.webmanifest (ersetzen)
-- fc231-inhalte.js (neu)
-- fc231-faecher.js (neu)
-- fc231-tests.js (neu)
-- fc231-lernhilfen.js (neu)
+Die bisherigen vier fc231-*.js Dateien und die übrigen Projektdateien NICHT löschen.
 
-1) ZIP entpacken; alle 7 Dateien gemeinsam über Add file > Upload files hochladen.
-2) GitHub Commit changes abwarten; nicht die ZIP selbst hochladen.
-3) Im iPhone Safari FixClever mit Internetverbindung öffnen; die neue Version sollte 2.3.1 anzeigen.
-4) Zum ersten Mal nach diesem Update müssen alle Datenpakete vollständig online gespeichert werden. Die Fächer erscheinen erst dann.
-5) Wenn ein Fehlerhinweis erscheint, fehlende Datei aus obiger Liste hochladen und nochmals laden.
-6) Erst nach der Offline-Bereitmeldung Flugmodus testen.
+Anschließend FixClever direkt in Safari mit Internet öffnen.
+Bestehende Profile und Statistiken bleiben lokal und werden nicht gelöscht.
+Falls „Startdiagnose“ erscheint, den Text fotografieren und mitteilen.
 
-Die Lernprofile und Noten bleiben im lokalen Browser-Speicher; dieses Update löscht sie nicht. Keine Website-Daten oder Home-Bildschirm-App löschen, ohne zuvor Daten zu sichern.
-
-Hinweis: Die Startreparatur ändert das Ladeverhalten, nicht die fachliche Qualität der Aufgaben. Die endgültige Funktion muss auf dem iPhone bestätigt werden.
+Die Reparatur beseitigt eine Lade-Reihenfolgen-Abhängigkeit.

@@ -2,7 +2,7 @@
   "id": "./",
   "name": "FixClever – Dein Lernraum",
   "short_name": "FixClever",
-  "description": "FixClever 2.3.1: Startreparatur und schneller Offline-Start; 3.100 Lerneinheiten, Lernstudio, Spracheinstellungen und lokale Profile.",
+  "description": "FixClever 2.3.2: Startreparatur für die vollständige Fachnavigation und Offline-Lernen mit 3.100 Lerneinheiten.",
   "lang": "de-DE",
   "start_url": "./index.html",
   "scope": "./",

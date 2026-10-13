@@ -1,22 +1,21 @@
-/* FixClever 2.3.1 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
+/* FixClever 2.3.2 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
 'use strict';
-const VERSION='2.3.1';
-const CACHE='fixclever-core-'+VERSION+'-startfix-offline-2026-10-13';
+const VERSION='2.3.2';
+const CACHE='fixclever-core-'+VERSION+'-startfix-v232-2026-10-13-final';
 const CORE=[
  './index.html', './',
- './style.css?v=2.3.1',
- './lessons.js?v=2.3.1',
- './questions.js?v=2.3.1',
- './curriculum-extra.js?v=2.3.1',
- './app.js?v=2.3.1',
- './subjects-extra.js?v=2.3.1',
- './quiz.js?v=2.3.1',
- './examples-extra.js?v=2.3.1',
+ './style.css?v=2.3.2',
+ './lessons.js?v=2.3.2',
+ './questions.js?v=2.3.2',
+ './curriculum-extra.js?v=2.3.2',
+ './app.js?v=2.3.2',
+ './quiz.js?v=2.3.2',
+ './examples-extra.js?v=2.3.2',
  './icon.svg',
  './icon-192.png', './icon-512.png', './apple-touch-icon.png', './favicon-32.png',
- './fc231-inhalte.js?v=2.3.1', './fc231-faecher.js?v=2.3.1',
- './fc231-tests.js?v=2.3.1', './fc231-lernhilfen.js?v=2.3.1',
- './manifest.webmanifest?v=2.3.1'
+ './fc231-inhalte.js?v=2.3.2',
+ './fc231-tests.js?v=2.3.2', './fc231-lernhilfen.js?v=2.3.2',
+ './manifest.webmanifest?v=2.3.2'
 ];
 const urls=CORE.map(p=>new URL(p,self.registration.scope).href);
 const indexUrl=new URL('./index.html',self.registration.scope).href;
@@ -53,11 +52,21 @@ self.addEventListener('fetch',event=>{
  if(request.mode==='navigate'){
    event.respondWith((async()=>{
      const cache=await caches.open(CACHE);
-     // Schnell aus dem zuvor vollständig geprüften Offline-Cache starten.
      const saved=await cache.match(indexUrl)||await cache.match(new URL('./',scope).href);
-     if(saved)return saved;
-     try{return await fetch(request);}
-     catch{return new Response('FixClever: Offline-Inhalte noch nicht gespeichert. Bitte einmal online öffnen.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});}
+     // Bei bestehender Verbindung die neue Version bevorzugen. Nach kurzer Zeit
+     // auf den vollständig gespeicherten Offline-Stand zurückfallen.
+     const controller=new AbortController();
+     const timer=setTimeout(()=>controller.abort(),4000);
+     try{
+       const online=await fetch(request,{signal:controller.signal,cache:'no-store'});
+       if(online.ok){
+         if(online.type==='basic')await cache.put(indexUrl,online.clone());
+         return online;
+       }
+       return saved||online;
+     }catch{
+       return saved||new Response('FixClever: Offline-Inhalte noch nicht gespeichert. Bitte einmal online öffnen.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
+     }finally{clearTimeout(timer);}
    })());
    return;
  }
