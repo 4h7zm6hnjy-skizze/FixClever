@@ -149,3 +149,17 @@ window.FixCleverAnswerAudit=Object.freeze({mode:'authored-answers',questionCount
  };
  window.FixCleverRewardsAudit=()=>{const a=info();return {stars:a.stars,earnedBadges:a.goals.filter(x=>x.done).map(x=>x.id),count:a.attempts.length}};
 })();
+
+/* FixClever 3.0.0 – additive Erweiterungen nachladen, ohne Originalfragen zu verändern. */
+(()=>{
+  if(document.querySelector('script[data-fc300-loader]'))return;
+  const script=document.createElement('script');
+  script.src='./fc300-suite.js?v=3.0.0';
+  script.dataset.fc300Loader='true';
+  script.async=true;
+  script.onerror=()=>{
+    window.FC233_REPORT?.('FixClever 3.0.0 Modul fehlt: fc300-suite.js');
+    console.warn('FixClever 3.0.0: fc300-suite.js fehlt. Die bisherige App bleibt nutzbar.');
+  };
+  document.head.append(script);
+})();

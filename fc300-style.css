@@ -1,0 +1,41 @@
+/* FixClever 3.0 – ergänzt das vorhandene helle Design, überschreibt nicht die Navigation. */
+.fc300-button{border:1px solid #9bb9ad;background:#fff;color:#215a49;border-radius:13px;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer;min-height:43px;line-height:1.25}
+.fc300-button.primary{background:#18694f;color:#fff;border-color:#18694f}
+.fc300-button:focus-visible,.fc300-hub :focus-visible{outline:3px solid #e4a44f;outline-offset:2px}
+.fc300-dashboard{background:linear-gradient(115deg,#f0f9f4,#edf4fb);border:1px solid #c3ded2;padding:18px;border-radius:20px;margin:16px 0 22px;color:#173e33;box-shadow:0 3px 18px #123c2720}
+.fc300-dashboard .fc300-eyebrow,.fc300-eyebrow{font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#3f755e}
+.fc300-dashboard h2{font-size:clamp(19px,3.5vw,27px);line-height:1.2;margin:5px 0 9px;color:#144c37}
+.fc300-dashboard .fc300-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}
+.fc300-kpi{padding:12px;border:1px solid #d7e6dc;background:#fff;border-radius:12px;min-width:0}
+.fc300-kpi strong{display:block;font-size:22px;color:#124c35;line-height:1.25;font-variant-numeric:tabular-nums}.fc300-kpi small{font-size:11px;color:#4a7161}
+.fc300-actions,.fc300-hub-actions{display:flex;gap:9px;flex-wrap:wrap}.fc300-dashboard p{color:#3b6154;margin:6px 0 12px}
+.fc300-hub{border:0;border-radius:18px;background:#fafcfb;color:#193f33;width:min(930px,calc(100vw - 14px));max-width:none;max-height:92dvh;padding:0;box-shadow:0 15px 60px #062d2b66;overflow:hidden}
+.fc300-hub::backdrop{background:#0e282a99}.fc300-hub-head{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#e6f2e9;padding:17px 20px;border-bottom:1px solid #bbd7c5}
+.fc300-hub-head h2{font-size:22px;color:#153f31;margin:3px 0}.fc300-hub-head p{margin:0;color:#537363;font-size:12px}
+.fc300-hub .fc300-close{background:#fff;border-radius:11px;border:1px solid #b6d1c1;padding:9px 14px;font-weight:800;font-size:20px;color:#215a47;cursor:pointer}
+.fc300-hub-tabs{display:flex;gap:7px;overflow-x:auto;padding:11px 15px;background:#f2f6f4;border-bottom:1px solid #dde8e0;scrollbar-width:thin}
+.fc300-hub-tabs button{background:white;border:1px solid #cadbd2;border-radius:11px;white-space:nowrap;padding:9px 12px;color:#335a4a;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.fc300-hub-tabs button[aria-selected=true]{background:#206e54;color:white;border-color:#206e54}
+.fc300-hub-content{padding:18px 20px 28px;overflow:auto;max-height:calc(92dvh - 160px);font-size:15px;line-height:1.55}
+.fc300-hub-content h3{font-size:20px;margin:5px 0 8px;color:#174b38}.fc300-hub-content h4{font-size:16px;margin:17px 0 8px;color:#225842}
+.fc300-hub-content p{margin:7px 0 12px}.fc300-muted{color:#5b7067}.fc300-small{font-size:12px}
+.fc300-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.fc300-panel{background:#fff;border:1px solid #d8e7dd;border-radius:14px;padding:14px;min-width:0}
+.fc300-panel h4{margin:3px 0 9px}.fc300-panel p{margin:6px 0}.fc300-panel[role=alert]{border-color:#cb947d;background:#fff7ee}
+.fc300-field{display:grid;gap:5px;margin:10px 0;color:#315845;font-weight:650;font-size:13px}
+.fc300-field input,.fc300-field select,.fc300-field textarea{box-sizing:border-box;width:100%;max-width:100%;border:1px solid #9fbbac;border-radius:10px;background:white;color:#173c31;font:inherit;font-size:16px;padding:11px 12px;min-height:44px}
+.fc300-field input[type=checkbox]{width:20px;min-height:20px}.fc300-choices{display:grid;gap:6px;margin:10px 0}.fc300-choices button{text-align:left;background:white;border:1px solid #bbd5c7;border-radius:11px;padding:11px;color:#204c3a;font:inherit;cursor:pointer}
+.fc300-choices button[data-selected=true]{background:#e6f3e9;border-color:#26865b}.fc300-choices button:disabled{opacity:.7;cursor:default}
+.fc300-result{padding:11px;border-left:4px solid #21815c;background:#f0f8f3;border-radius:8px;margin-top:12px}.fc300-result.bad{border-color:#bb7259;background:#fff1ed}
+.fc300-progress{height:9px;background:#dce9de;border-radius:12px;overflow:hidden}.fc300-progress>span{display:block;height:100%;background:#2b8a5f;border-radius:12px}
+.fc300-table{width:100%;border-collapse:collapse;background:#fff}.fc300-table th,.fc300-table td{padding:9px 8px;border-bottom:1px solid #d5e3d9;text-align:left;font-size:13px;vertical-align:top}.fc300-table th{color:#345b49}
+.fc300-dialog-footer{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.fc300-reader-extra{border:1px solid #d2e2d6;border-radius:14px;padding:15px;margin:18px 0;background:#f5faf5;color:#254a3b}
+.fc300-reader-extra ol{padding-left:22px}.fc300-reader-extra li{margin:10px 0}.fc300-reader-extra strong{color:#18513e}
+.fc300-voicebar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.fc300-note-keys{display:flex;gap:3px;align-items:flex-end;min-height:155px;overflow-x:auto;max-width:100%}.fc300-note-keys button{height:150px;min-width:40px;flex:1;background:#fff;border:1px solid #859d93;border-radius:0 0 8px 8px;color:#246349;cursor:pointer}.fc300-note-keys button:nth-child(2n){background:#273a35;color:#fff;height:105px;min-width:30px;flex:.6}
+.fc300-chart-bars{display:flex;align-items:flex-end;gap:4px;min-height:125px;border-bottom:1px solid #c9d6cc}.fc300-chart-bars div{flex:1;background:#459f7e;min-width:5px;border-radius:5px 5px 0 0}
+.fc300-status{font-size:12px;color:#497360;padding:7px 0}.fc300-alert{font-size:13px;color:#944833;background:#fff2ec;padding:10px;border-radius:8px}
+.fc300-hidden{display:none!important}
+@media(max-width:600px){.fc300-dashboard{padding:13px;border-radius:15px}.fc300-dashboard .fc300-kpis{gap:5px}.fc300-kpi{padding:9px 7px}.fc300-kpi strong{font-size:18px}.fc300-kpi small{font-size:10px}.fc300-grid{grid-template-columns:1fr}.fc300-hub-head{padding:12px}.fc300-hub-content{padding:13px;max-height:calc(92dvh - 145px)}.fc300-hub-head h2{font-size:19px}.fc300-button{padding:9px 11px;font-size:13px}}
+@media print{.fc300-dashboard,.fc300-hub{display:none!important}}
+
+.fc300-fraction{display:flex;width:100%;max-width:550px;min-height:68px;gap:4px;margin:12px 0}.fc300-fraction span{flex:1;min-width:6px;border:1px solid #39765e;background:#fff;border-radius:5px}.fc300-fraction span.selected{background:#64b69a;border-color:#247553}

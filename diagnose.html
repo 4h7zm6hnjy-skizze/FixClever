@@ -20,7 +20,7 @@ small{color:#566c65}#copy{background:#385c6d}
 (()=>{
 'use strict';
 const files=['index.html','style.css','lessons.js','questions.js','curriculum-extra.js','fc231-inhalte.js',
-'app.js','quiz.js','fc231-tests.js','fc233-lernhilfen.js','sw.js','version.json','repair.html'];
+'app.js','quiz.js','fc231-tests.js','fc233-lernhilfen.js','sw.js','version.json','fc300-suite.js','fc300-style.css','prepare-index.html','repair.html'];
 const go=document.getElementById('go'),copy=document.getElementById('copy'),out=document.getElementById('results');
 const status=document.getElementById('status'),details=document.getElementById('detail');
 let report=[];
@@ -34,13 +34,15 @@ async function check(name){
   if(text.length<4)throw new Error('Datei ist leer');
   const problems=[];
   if(name==='index.html'&&!text.includes('fc233-progressive-loader'))problems.push('Startprogramm nicht gefunden');
-  if(name==='fc231-tests.js'&&!text.includes('authored-answers'))problems.push('Qualitätsreparatur noch nicht veröffentlicht');
-  if(name==='sw.js'&&!text.includes('quality-20261013'))problems.push('Offline-Reparatur noch nicht veröffentlicht');
+  if(name==='fc231-tests.js'&&(!text.includes('authored-answers')||!text.includes('fc300-suite.js')))problems.push('FixClever 3.0.0 Erweiterungs-Lader fehlt');
+  if(name==='sw.js'&&!text.includes('fixclever-core-3.0.0'))problems.push('3.0.0 Offline-Dienst noch nicht veröffentlicht');
   if(name==='version.json'){
-   try{if(JSON.parse(text).version!=='2.3.3')problems.push('Versionsnummer passt nicht zu index.html (2.3.3)');}
+   try{if(JSON.parse(text).version!=='3.0.0')problems.push('Versionsnummer ist nicht 3.0.0');}
    catch{problems.push('Ungültiges JSON');}
   }
   if(name==='fc231-inhalte.js'&&text.length<1000000)problems.push('Inhaltsdatei ist unerwartet klein');
+  if(name==='fc300-suite.js'&&!text.includes('FixClever300'))problems.push('Lerncockpit 3.0 fehlt');
+  if(name==='fc300-style.css'&&!text.includes('.fc300-dashboard'))problems.push('3.0.0 Design fehlt');
   if(problems.length)throw new Error(problems.join('; '));
   return {file:name,ok:true,characters:text.length};
  }catch(e){return{file:name,ok:false,error:e?.name==='AbortError'?'Zeitüberschreitung (30 Sekunden)':String(e?.message||e)};}

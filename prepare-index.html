@@ -1,0 +1,17 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FixClever 3.0 – Index-Abgleich</title><style>body{font:16px/1.55 system-ui;background:#f1f8f4;color:#1c3d31;padding:20px}main{margin:auto;max-width:700px;background:white;border-radius:18px;padding:25px}button{border:0;border-radius:10px;background:#167152;color:white;font:inherit;padding:12px 17px;cursor:pointer}#state{white-space:pre-wrap}</style></head><body><main><h1>FixClever 3.0 – Versionsanzeige aktualisieren</h1><p>Diese Funktion liest die vorhandene <code>index.html</code> von derselben Website ein und erstellt eine angepasste Datei zum Herunterladen. Die Original-Lerninhalte werden nicht geändert.</p><button id="generate">Angepasste index.html erstellen</button><p id="state" role="status"></p><p>Danach die heruntergeladene <code>index.html</code> im GitHub-Hauptverzeichnis ersetzen. Dieser Zusatzschritt korrigiert die statische Versionsanzeige; das Lerncockpit selbst wird bereits durch <code>fc231-tests.js</code> geladen.</p></main><script>
+const status=document.getElementById('state');
+document.getElementById('generate').addEventListener('click',async()=>{
+ try{status.textContent='Originaldatei wird geprüft …';const response=await fetch('./index.html?prepare='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);let html=await response.text();
+ const meta=/<meta name="fixclever-version" content="(?:2\.3\.3|3\.0\.0)"/;
+ if(!meta.test(html)||!html.includes('fc233-progressive-loader')||!html.includes('fc231-tests.js?v=2.3.3'))throw Error('Unbekannte Version der bestehenden Startdatei – kein automatisches Überschreiben.');
+ html=html.replace(meta,'<meta name="fixclever-version" content="3.0.0"');
+ if(!html.includes('id="fc300-preload"'))html=html.replace('</head>','<link id="fc300-preload" rel="preload" as="script" href="./fc231-inhalte.js?v=2.3.3"></head>');
+ html=html.replace(/FixClever · Version 2\.3\.3/g,'FixClever · Version 3.0.0');
+ html=html.replace(/FixClever 2\.3\.3/g,'FixClever 3.0.0');
+ html=html.replace(/<h2>FixClever 2\.3\.3/g,'<h2>FixClever 3.0.0');
+ // Leave ?v=2.3.3 code URLs intact: the 3.0 worker refreshes them online and reuses cached copies offline.
+ const file=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download='index.html';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+ status.textContent='Fertig. Lade jetzt die erzeugte index.html nach GitHub hoch. Deine ursprünglichen Lerninhalte sind unverändert.';
+ }catch(e){status.textContent='Abbruch: '+e.message;}
+});
+</script></body></html>

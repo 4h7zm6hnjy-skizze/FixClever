@@ -1,51 +1,56 @@
-FIXCLEVER 2.3.3 – QUALITÄTS- UND STABILITÄTSKORREKTUR (13.10.2026)
-==============================================================
+FIXCLEVER 3.0.0 – EIN GESAMTUPDATE
+=================================
 
-ACHTUNG: Dieses Paket ist NICHT automatisch bei GitHub eingespielt.
-Die verbundene GitHub-Integration kann aktuell nur lesen (HTTP 403 beim Schreiben).
+Repository: https://github.com/4h7zm6hnjy-skizze/FixClever
+Web-App:    https://4h7zm6hnjy-skizze.github.io/FixClever/
 
-GitHub-Repository:
-https://github.com/4h7zm6hnjy-skizze/FixClever
+WICHTIG VORAB
+- Bestehende lokale Profile und Testergebnisse möglichst vorab in FixClever exportieren.
+- Nichts aus dem alten Repository löschen.
+- Der GitHub-Connector verweigerte bisher direkte Änderungen (HTTP 403): Das Paket ist
+  vorbereitet, aber NICHT automatisch auf GitHub installiert.
+- Das ZIP ist ein UPDATE, keine vollständige Kopie der bestehenden 3,9-MB-Inhaltsdatei.
 
-1. Erstelle vor dem Update ein Backup bestehender Kinderprofile über die
-   Exportfunktion von FixClever, sofern die App dafür noch bedienbar ist.
-2. Entpacke die ZIP-Datei.
-3. Lade GENAU die folgenden Dateien in das HAUPTVERZEICHNIS des GitHub-Repositories:
-     fc231-tests.js
-     sw.js
-     version.json
-     repair.html
-     diagnose.html
-   Bestehende Dateien gleichnamig ersetzen. Die Dateien NICHT in einen
-   Unterordner verschieben. 'index.html' und die großen Inhalte NICHT löschen.
-4. Nach der Veröffentlichung im Safari auf dem betroffenen Gerät öffnen:
+SO WIRD DAS GESAMTUPDATE EINGESPIELT
+1. ZIP herunterladen und ENTpacken (nicht die ZIP selbst in GitHub hochladen).
+2. GitHub-Repository öffnen und auf „Add file“ > „Upload files“ gehen.
+3. Die folgenden Dateien aus dem entpackten Paket direkt in das HAUPTVERZEICHNIS
+   des bestehenden Repositorys hochladen; gleichnamige Dateien ersetzen:
+
+   fc231-tests.js       – kompatibler Testcode plus automatische 3.0-Modul-Einbindung
+   fc300-suite.js       – alle neuen Lernfunktionen
+   fc300-style.css      – responsives Zusatzdesign
+   sw.js                – neuer Offline-Dienst
+   version.json         – Release 3.0.0
+   manifest.webmanifest – PWA-Metadaten 3.0.0
+   update-check.js      – entfernter Altversions-Widerspruch (Fallback)
+   repair.html          – Start- und Cache-Reparatur
+   diagnose.html        – veröffentlichte Datei-Prüfung
+   prepare-index.html   – Generator für die aktualisierte index.html
+
+4. Commit changes bestätigen, GitHub-Pages-Veröffentlichung abwarten.
+5. Danach IM SAFARI folgende Seite öffnen:
    https://4h7zm6hnjy-skizze.github.io/FixClever/repair.html
-   Danach 'FixClever öffnen' auswählen.
-5. Diagnoseseite öffnen und auf 'Prüfung starten' tippen:
+   Auf „FixClever öffnen“ klicken. Das 3.0-Lerncockpit wird über fc231-tests.js geladen.
+6. Für die statische 3.0-Versionsanzeige zusätzlich aufrufen:
+   https://4h7zm6hnjy-skizze.github.io/FixClever/prepare-index.html
+   Auf „Angepasste index.html erstellen“ tippen. Die heruntergeladene index.html
+   anschließend in GitHub als Ersatz für die ALTE index.html hochladen.
+   Dies ändert nur Start-Metadaten und eine Vorladeregel, NICHT die Lerninhalte.
+7. Nochmal die Reparaturseite öffnen; danach die App starten.
+8. Abschließend Diagnose aufrufen:
    https://4h7zm6hnjy-skizze.github.io/FixClever/diagnose.html
-   Bei Fehlern 'Ergebnis kopieren' verwenden und zur Prüfung mitteilen.
-6. Einen Test mit zehn Fragen absolvieren, speichern, die App schließen und
-   erneut öffnen. Statistiken/Profilwechsel prüfen. Offline nur testen,
-   nachdem 'Offline bereit' angezeigt wird.
+   „Prüfung starten“ tippen, ggf. Fehlerbericht kopieren.
 
-WAS SICH ÄNDERT
-- Zehn Aufgaben pro Test bleiben erhalten; die ORIGINALEN Antwortmöglichkeiten
-  werden nicht mehr durch ungeprüfte Ablenkungsantworten aufgebläht.
-- Die aktuelle Frage kann daher 2, 3 oder mehr Antwortmöglichkeiten haben;
-  die bisherige Behauptung 'jeweils 10 Antwortmöglichkeiten' entfällt.
-- Alte Testergebnisse werden mit ihrer gespeicherten Punktzahl möglichst
-  weitergeführt. Eine vorher bereits gelöschte Statistik kann dieses Update
-  NICHT wiederherstellen. Deshalb Backup prüfen.
-- Das große Inhaltsmodul und das Design bleiben unverändert.
-- Die alte Cache-Kennung wird ersetzt; JS/CSS laden online zuerst die
-  aktuelle Version und nutzen nur offline den gespeicherten Stand.
-- 'version.json' stimmt danach mit dem HTML-Metatag 2.3.3 überein.
-- 'diagnose.html' prüft 13 Dateien auf Erreichbarkeit/grundlegende Plausibilität.
+HINWEISE
+- Alle bisherigen Lernmodule bleiben im Repository; keine Datenbank wird migriert.
+- Die lokalen Kinderprofile werden nicht bewusst gelöscht oder zurückgesetzt.
+- Alte Testfragen bleiben bestehen; keine automatisch erfundenen Antwortoptionen.
+- Arbeitsblätter: iPhone → Druckansicht → Teilen oder Drucken → als PDF sichern.
+- Sprachausgabe und volle Offline-Nutzung hängen vom Browser ab.
+- Die große Inhaltsdatei wurde NICHT aufgeteilt. Das bleibt eine nachweisbare
+  strukturelle Grenze bei Startzeit und Mobilgeräte-Leistung.
+- In diesem ZIP sind keine vollständigen NRW-Lehrplanprüfungen oder alle
+  3.100 manuell fachlich überprüften Erklärungen enthalten.
 
-WICHTIG
-- Das Update ist ein Sicherheits-/Qualitätshotfix innerhalb 2.3.3 und keine
-  vollständige 2.3.4-Version. Deshalb bleibt die angezeigte App-Version 2.3.3.
-- Die 3,9-MB-Datendatei und 'index.html' wurden nicht verändert.
-- Nicht alle historischen Lerninhalte konnten eingesehen werden. Insbesondere
-  die Korrektheit von 3.100 Einheiten sowie ein echter iPhone-End-to-End-Test
-  sind noch OFFEN. Das Paket garantiert keine vollständige Fehlerfreiheit.
+Für genaue technische Einschränkungen PRUEFBERICHT.md lesen.

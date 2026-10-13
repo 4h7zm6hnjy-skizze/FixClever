@@ -1,39 +1,51 @@
-# FixClever – Intensivprüfung mit vorsichtigem Qualitäts-Hotfix
+# FixClever 3.0.0 – Prüfbericht
 
-**Stand:** 13. Oktober 2026 · Repository `4h7zm6hnjy-skizze/FixClever` · Hauptzweig `main`.
+**Datum:** 13. Oktober 2026  
+**Basis:** öffentlich zugängliche FixClever-2.3.3-Repository-Dateien; neues Update als *Zusatzdateien*.
 
-## Prüfgrenzen
+## Testergebnisse
 
-Die Prüfung beruhte auf dem GitHub-Quellcode, funktionalen JavaScript-Simulationen und Quellcode-/Syntaxkontrollen. Eine Live-Ausführung der gesamten Anwendung auf dem iPhone oder ein vollständiger automatisierter Browser-End-to-End-Test war nicht möglich. `fc231-inhalte.js` ist ungefähr 3,9 MB groß und konnte über die vorhandene GitHub-Leseschnittstelle nicht vollständig bezogen werden. Eine vollständige fachliche Bewertung sämtlicher behaupteter 3.100 Lerneinheiten ist deshalb **nicht erfolgt**. Es erfolgte keine direkte Änderung des GitHub-Repositories, weil der Schreibzugriff mit HTTP 403 verweigert wurde.
+- Syntaxprüfung mit Node.js: `fc231-tests.js`, `fc300-suite.js` und `sw.js` erfolgreich.
+- Isolierter Chromium-Browsertest bei 390 × 844 Pixeln: Lerncockpit installiert; alle **neun** Reiter sichtbar und klickbar: Lernplan, Trainer, Arbeitsblätter, Statistik, Lehrplan, Eltern, Vorlesen, Sicherung, Diagnose.
+- **Zwölf** Trainer-Bereiche durchgeschaltet und Antwortanzeige geprüft: Plus, Minus, Mal, Geteilt, Brüche, Prozent, Gleichungen, Flächen, Deutsch, Englisch, Geschichte, Musik.
+- Wochenziel geändert und in simuliertem lokalen Browser-Speicher gespeichert.
+- Backupdatei und JSON-Diagnose-Datei konnten im Testbrowser heruntergeladen werden.
+- Das Testergebnis der strukturellen Selbstdiagnose im **simulierten Datensatz** lautete: 150 Lektionen, 1.500 Fragen, null Strukturfehler. Das ist **kein Ergebnis für den vollständigen produktiven Datenbestand**.
+- Im isolierten Modultest keine unbehandelten JavaScript-Laufzeitfehler beobachtet.
 
-## Ergebnis der Quellcodeprüfung
+**Testgrenze:** Der Browsertest verwendete eine synthetische Weboberfläche; eine vollständige Kopie des 3,9-MB-Produktivdatenpakets sowie ein echter Lauf auf iOS-Safari standen nicht zur Verfügung. Daher kann die Gesamt-App **nicht als fehlerfrei bescheinigt** werden. Das Update ist **noch nicht auf GitHub veröffentlicht**.
 
-| Priorität | Feststellung | Nachweis und Behandlung |
-|---|---|---|
-| Hoch | Ursprüngliche Richtig/Falsch-Fragen wurden automatisch durch neue 10-Optionen-Fragen ersetzt | In der zugänglichen Teilmenge von 1.540 Fragen wurden 960 Originalfragen umformuliert. Der Hotfix `fc231-tests.js` entfernt diese automatische Umschreibung vollständig; zehn Fragen pro Test bleiben. |
-| Hoch | Historische Quizoptionen können nach Updates von den aktuell gültigen Optionen abweichen | Der neue Validator behält die gespeicherte Punktzahl für strukturell gültige ältere Datensätze, statt sie gegen nachträglich geänderte Optionen zu bewerten. Alte Ergebnisse, die zuvor bereits gelöscht wurden, lassen sich damit nicht wiederherstellen. |
-| Hoch | Installierte Service Worker können trotz GitHub-Änderungen denselben älteren Dateinamen aus dem Cache liefern | Der neue `sw.js` verwendet einen neuen Cache-Schlüssel und für JavaScript/CSS Online-first. Das funktioniert im simulierten Online-/Offline-Test; reale Geräteprüfung bleibt offen. |
-| Mittel | `version.json` = 1.2.0, während das HTML/Service Worker 2.3.3 angeben | `version.json` wird auf 2.3.3 gebracht. Die eigentliche HTML-Version bleibt bei 2.3.3. |
-| Mittel | Skript-Download erfolgreich heißt nicht Skript erfolgreich ausgeführt | Der bestehende Loader prüft nicht jede Modulinitialisierung; er wurde in diesem kleinen Hotfix nicht ersetzt. Eine gründliche Loader-Reparatur erfordert `index.html`. |
-| Mittel | Basisthemen haben nicht durchgehend fünf eigene Beispiele | 150 zugängliche Originalthemen verwenden ein `example`-Feld, keine fünfteilige `examples`-Liste. Ein Schutz im Hotfix stellt zumindest vorhandene echte Beispiele wieder her; fehlende weitere Beispiele werden nicht erfunden. |
-| Mittel | Eine Inhaltsdatei ist circa 3,9 MB groß; langsamer Start auf Mobilgeräten möglich | Datendatei nicht geändert. Nachhaltige Lösung: Inhalte auf Klassen/Fächer aufteilen und bedarfsgerecht laden. |
-| Niedrig | Historische Dateien und nicht verwendete Altversionen liegen im Repository | Nicht entfernt, um keinen Bestandsteil ohne vollständigen Regressionstest zu beschädigen. |
+## Abgleich mit den 15 gewünschten Verbesserungen
 
-## Was konkret getestet wurde
+| Nr. | Punkt | Stand | Nachweis/Grenze |
+|---|---|---|---|
+| 1 | Modernere Startseite | Zusatzmodul umgesetzt | Lerncockpit, Kacheln, Fortschritt, responsiv |
+| 2 | Interaktive Erklärungen | Teilweise | Interaktiver Trainer und Musik-Töne, vorhandene Fachmodule erhalten; kein flächendeckender interaktiver Kurs |
+| 3 | Individueller Lerntrainer | Umgesetzt, regelbasiert | Empfehlungen aus bisherigen Tests; keine KI-Auswertung |
+| 4 | Schneller Start | Nur teilweise | Leichtgewichtiges Zusatzmodul; bestehender 3,9-MB-Kern weiterhin im synchronen Ladepfad |
+| 5 | Navigation und Stabilität | Teilweise getestet | Neun neue Reiter getestet; kompletter Alt-App-Klicktest offen |
+| 6 | Fachlich geprüfte Quizfragen | Strukturschutz | Originalfragen und Antworten erhalten; fachliche Einzelprüfung noch offen |
+| 7 | Fünf erklärte Beispiele | Teilweise | Bis zu fünf vorhandene Erklärung/Quiz-Beispiele; Qualität und Vollständigkeit nicht einzeln bestätigt |
+| 8 | NRW-Lehrplan | Übersicht umgesetzt | Links und Klassenstatistik; amtlicher Einzelabgleich offen |
+| 9 | Offline-Modus | Verbessert | 3.0-Service-Worker mit kontrolliertem Cache; Fachpakete einzeln herunterladen noch nicht umgesetzt |
+| 10 | Menschlichere Sprachausgabe | Bedienelemente umgesetzt | Geräte-Stimme, Tempo, Tonhöhe; natürliches Sprachmodell nicht enthalten |
+| 11 | Lernstatistik | Umgesetzt | Fachbezogene Aggregation, Fehler und Fortschritt; Profile lokal |
+| 12 | Lernplan | Umgesetzt, regelbasiert | Priorisierte Themen und Wiederholungshinweise |
+| 13 | Elternbereich | Umgesetzt | Wochenziel und Profilübersicht; keine PIN |
+| 14 | Arbeitsblätter | Umgesetzt mit Browserdruck | Antworten auf separater Seite, PDF über Druckdialog; kein unabhängiger PDF-Server |
+| 15 | Sicherung und Diagnose | Umgesetzt | Lokal-JSON-Backup, Wiederherstellung mit Bestätigung, Fehlerdiagnose |
 
-- **JavaScript-Syntax:** die zugänglichen aktiven Skripte und relevanten Inline-Skripte sind syntaktisch gültig (außer dem über die Schnittstelle nicht auslesbaren 3,9-MB-Modul).
-- **Autorisierte Basisdaten:** 150 Originalthemen ohne doppelte IDs; 1.500 Fragen in 150 Tests mit jeweils zehn Fragen, gültigen Antwortindices und ohne identische Antwortoptionen innerhalb einer Frage.
-- **Weitere zugängliche Curriculumsdatei:** ergibt zusammen 154 Themen und 1.540 Fragen; die restlichen großen Datensätze sind nicht vollständig überprüft.
-- **Vorheriger Umschreibemechanismus:** 960 automatisch geänderte Fragetexte unter 1.540 Fragen und mindestens eine Frage mit nur drei statt zehn automatisch erzeugten Antwortoptionen.
-- **Neuer Hotfix:** 31.000 synthetische Testfragen in einer Node-Virtual-Machine erfolgreich verarbeitet, Originalbank dabei unverändert. Historische Punktzahl beibehalten; doppelte Frage-IDs und ungültige Punktzahlen werden abgewehrt.
-- **Service Worker:** mit einem isolierten Fetch-/Cache-Mock bestätigt, dass eine online geänderte JavaScript-Datei nicht dauerhaft von einer älteren Cacheversion verdeckt wird und dass die aktualisierte Fassung offline wiederverwendet werden kann.
-- **Mobile App, iOS Safari, weitere Bibliothek:** nicht vollständig getestet. Eine solche Freigabe darf nicht behauptet werden.
+## Bestandschutz
 
-## Verbleibende Risiken und nächste Schritte
+Keine Änderung an `app.js`, `quiz.js`, `lessons.js`, `questions.js` oder `fc231-inhalte.js` ist in diesem Paket vorgesehen. Die bisher gespeicherten Lernstände werden nicht absichtlich gelöscht. Der neue Service Worker leert ausschließlich alte App-Caches, wenn die neue Installation vollständig ist. Die Cache-Reparatur löscht **nicht** `localStorage` oder `indexedDB`.
 
-1. Nach Upload den Cache mit `repair.html` auf jedem betroffenen Gerät aktualisieren und `diagnose.html` prüfen.
-2. Auf einem echten iPhone Login/Profilanlage, Fächer, Navigation, Vorlesen, Beispielansicht, zehn Testfragen, Lernnoten, Statistiken, Export/Import und Offline-Nutzung einzeln ausprobieren.
-3. Das vollständige `fc231-inhalte.js` anhand einer lokalen Kopie prüfen: IDs, Fragezahl, Fehler, Fach-/Klassenabdeckung, fünf Beispiele und pädagogische Eindeutigkeit.
-4. Für die nächste Hauptversion `index.html` und die Lade-/Versionsverwaltung gemeinsam modernisieren; das App-Gerüst danach in einem reproduzierbaren Browser-Test prüfen.
+**Zu beachten:** Bei Import einer älteren Sicherung können vorhandene Lernstände nach ausdrücklicher Bestätigung überschrieben werden. Vorher selbst eine frische Sicherung exportieren.
 
-**Fazit:** Dieser Hotfix beseitigt nachgewiesene Risiken in Fragegenerierung und Offline-Cache. Er ist keine Zusicherung einer insgesamt fehlerfreien FixClever-App.
+## Offene Tests vor einer Freigabe für Kinder
+
+1. Echte Startzeit auf einem iPhone bei sauberem Online-Start und nach Cache-Reparatur messen.
+2. Je Klassenstufe und Fach mindestens einen Lese-/Quiz-Durchlauf im vollständigen Datenbestand durchführen.
+3. Zufallsstichproben der historischen, mathematischen und sprachlichen Lösungsschlüssel fachlich prüfen.
+4. Profilwechsel, Löschen, Neustart, Backups und Wiederherstellung auf demselben Gerät prüfen.
+5. Offline-Start nach vollständiger Speicherung im Flugmodus ausprobieren.
+6. PDF-Druck auf iOS, Android und Desktop und Barrierefreiheit manuell prüfen.
