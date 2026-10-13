@@ -2,7 +2,7 @@
   "id": "./",
   "name": "FixClever – Dein Lernraum",
   "short_name": "FixClever",
-  "description": "FixClever 2.2.1: 3.100 Lerneinheiten, mit Lerncoach, Lernspielen, Übungstrainern, Wiederholungen, Lernstatistik und Datensicherung – offline nach dem ersten Laden.",
+  "description": "FixClever 2.3.0: Lernstudio mit regelbasiertem Lerncoach, drei Übungsstufen, Klassenarbeit, Lesen, Englisch-Hören, Lernspielen, Statistik, lokaler Sicherung und verbesserter Sprachausgabe – offline nach dem ersten Laden.",
   "lang": "de-DE",
   "start_url": "./index.html",
   "scope": "./",

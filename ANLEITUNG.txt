@@ -1,18 +1,13 @@
-FixClever 2.2.1 – korrigierte Lernzentrale
+FixClever 2.3.0 – Lernstudio-Gesamtupdate
 
-Dieses Paket ersetzt eine unvollständige 2.2.0-Ausgabe.
+1. Vor dem Update in FixClever eine Sicherung der Kinderprofile anlegen.
+2. Auf GitHub im Hauptverzeichnis index.html, sw.js und manifest.webmanifest ersetzen.
+3. Die ZIP selbst nicht hochladen, sondern die drei Dateien.
+4. Änderungen mit Commit changes bestätigen.
+5. FixClever online öffnen und auf die Offline-Bereitmeldung warten.
+6. Im Lernstudio die Funktionen und im Flugmodus den Offline-Start testen.
 
-Installation:
-1. Die drei Dateien index.html, sw.js, manifest.webmanifest im Hauptordner des GitHub-Repositorys ersetzen.
-2. GitHub-Änderungen mit "Commit changes" speichern.
-3. Die App anschließend online öffnen und auf die neue Offline-Speicherung warten.
-4. Die neue Lernzentrale über die Schaltfläche am unteren Bildschirmrand öffnen.
-
-Daten:
-Die vorhandenen FixClever-Datenschlüssel werden nicht geändert.
-Unter Eltern & Backup lassen sich die lokalen App-Daten exportieren und wiederherstellen.
-Vor einem Import unbedingt die bisherigen Daten sichern.
-
-Hinweis zur Qualität:
-Die neue Lernzentrale bietet einen regelbasierten Lerncoach, eine ausgewählte Aufgabenbank, Lernspiele, Wochenziel, Statistik, Lernhilfe und einen Lehrplan-Hinweis.
-Nicht alle 3.100 Einheiten sind individuell fachlich oder curricular geprüft. Die NRW-Lehrplanübersicht ist noch keine verbindliche amtliche Vollständigkeitsprüfung.
+WICHTIG: Der Lerncoach funktioniert regelbasiert offline und ist keine Online-KI.
+Die Natürlichkeit der Vorlesestimme hängt von den lokal installierten Systemstimmen ab.
+Nicht alle bestehenden 3100 Einheiten sind fachlich einzeln überprüft.
+Bei einem neu installierten iPhone-App-Symbol können lokale Daten verloren gehen. Vorher sichern.
