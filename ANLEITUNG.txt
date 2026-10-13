@@ -1,10 +1,14 @@
-FixClever 1.8.1 – Bruchkreise und Offline-Nutzung
+FixClever 1.9.0 – Mathe mit Bildern für die Klassen 1–10 (Offline-Update)
 
-1. ZIP auf dem iPhone oder Computer entpacken.
-2. Die Dateien index.html, sw.js und manifest.webmanifest auf GitHub im Stammverzeichnis von FixClever ersetzen.
-3. Alle übrigen Dateien des Repositories unverändert lassen.
-4. FixClever einmal mit Internetverbindung in Safari öffnen und die Offline-Bereitmeldung abwarten.
-5. Mathematik, Klasse 4-6, Thema mit „Brüche“ öffnen und Kreise, Vergleich und Rechenarten testen.
-6. Zum Testen des Offline-Betriebs Flugmodus einschalten und über das Home-Bildschirm-Symbol neu starten.
+So geht das Update:
+1. ZIP-Datei entpacken.
+2. index.html, sw.js und manifest.webmanifest im GitHub-Repository FixClever im Hauptverzeichnis ERSETZEN.
+3. Alle anderen vorhandenen Dateien im Repository unverändert lassen.
+4. https://4h7zm6hnjy-skizze.github.io/FixClever/?v=1.9.0 auf dem iPhone mit Internet öffnen und auf die Meldung „Offline bereit“ warten.
+5. Ein Mathe-Thema öffnen. Die „Mathe-Werkstatt“ erscheint oberhalb der geführten Lernhilfe; fünf Beispiele lassen sich auswählen. Bei Bruchthemen bleiben die interaktiven Bruchkreise aus 1.8.1.
+6. Eine Mathelektion aus jeder Klassenstufe (1–10) öffnen und die Zeichnung, die Rechenschritte und die Verständnisfrage prüfen.
+7. Offline-Funktion im Flugmodus über das Startbildschirm-Symbol testen.
 
-WICHTIG: Kinderprofile und Lernstatistiken bleiben in den bestehenden Browser-Speicherschlüsseln und werden durch diese Dateiersetzung nicht gelöscht. Lokale Browserdaten nicht löschen. iOS kann bei Speichermangel Caches entfernen.
+Die vorhandenen Profile, Sterne und Testergebnisse bleiben in den bisherigen lokalen Browserdaten. Diese Daten nicht löschen! iOS kann offline zwischengespeicherte Dateien unter bestimmten Umständen entfernen.
+
+Wichtig: Dieses Update ergänzt visuelle Übungsbeispiele zu allen derzeit bekannten 49 Mathelektionen. Die 408 bestehenden Lerninhalte werden nicht durch neue Inhalte ersetzt. Vollständige amtliche NRW-Lehrplanabdeckung und individuelle fachliche Prüfung aller bisherigen Tests sind damit nicht garantiert.

@@ -2,7 +2,7 @@
   "id": "./",
   "name": "FixClever – Dein Lernraum",
   "short_name": "FixClever",
-  "description": "FixClever 1.8.1: inklusive interaktiver Bruchkreise, anschaulicher Lernhilfe, Tests und Offline-Nutzung.",
+  "description": "FixClever 1.9.0: Mathe für Klasse 1–10 mit farbigen Bildhilfen, Bruchkreisen, Schritt-für-Schritt-Erklärungen und Offline-Lernen.",
   "lang": "de-DE",
   "start_url": "./index.html",
   "scope": "./",

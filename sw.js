@@ -1,19 +1,19 @@
-/* FixClever 1.8.1 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
+/* FixClever 1.9.0 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
 'use strict';
-const VERSION='1.8.1';
+const VERSION='1.9.0';
 const CACHE='fixclever-core-'+VERSION;
 const CORE=[
  './index.html', './',
- './style.css?v=1.8.1',
- './lessons.js?v=1.8.1',
- './questions.js?v=1.8.1',
- './curriculum-extra.js?v=1.8.1',
- './app.js?v=1.8.1',
- './subjects-extra.js?v=1.8.1',
- './quiz.js?v=1.8.1',
- './examples-extra.js?v=1.8.1',
+ './style.css?v=1.9.0',
+ './lessons.js?v=1.9.0',
+ './questions.js?v=1.9.0',
+ './curriculum-extra.js?v=1.9.0',
+ './app.js?v=1.9.0',
+ './subjects-extra.js?v=1.9.0',
+ './quiz.js?v=1.9.0',
+ './examples-extra.js?v=1.9.0',
  './icon.svg',
- './manifest.webmanifest?v=1.8.1'
+ './manifest.webmanifest?v=1.9.0'
 ];
 const urls=CORE.map(p=>new URL(p,self.registration.scope).href);
 const indexUrl=new URL('./index.html',self.registration.scope).href;
