@@ -1,20 +1,20 @@
-/* FixClever 1.9.3 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
+/* FixClever 2.0.0 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
 'use strict';
-const VERSION='1.9.3';
-const CACHE='fixclever-core-'+VERSION+'-musikwerkstatt';
+const VERSION='2.0.0';
+const CACHE='fixclever-core-'+VERSION+'-3000-lernmodule';
 const CORE=[
  './index.html', './',
- './style.css?v=1.9.3',
- './lessons.js?v=1.9.3',
- './questions.js?v=1.9.3',
- './curriculum-extra.js?v=1.9.3',
- './app.js?v=1.9.3',
- './subjects-extra.js?v=1.9.3',
- './quiz.js?v=1.9.3',
- './examples-extra.js?v=1.9.3',
+ './style.css?v=2.0.0',
+ './lessons.js?v=2.0.0',
+ './questions.js?v=2.0.0',
+ './curriculum-extra.js?v=2.0.0',
+ './app.js?v=2.0.0',
+ './subjects-extra.js?v=2.0.0',
+ './quiz.js?v=2.0.0',
+ './examples-extra.js?v=2.0.0',
  './icon.svg',
  './icon-192.png', './icon-512.png', './apple-touch-icon.png', './favicon-32.png',
- './manifest.webmanifest?v=1.9.3'
+ './manifest.webmanifest?v=2.0.0'
 ];
 const urls=CORE.map(p=>new URL(p,self.registration.scope).href);
 const indexUrl=new URL('./index.html',self.registration.scope).href;

@@ -2,7 +2,7 @@
   "id": "./",
   "name": "FixClever – Dein Lernraum",
   "short_name": "FixClever",
-  "description": "FixClever 1.9.3: 637 Lernthemen, Musik-Werkstatt mit Notenlesen, Klavier, Rhythmus, Instrumenten und Musikerinnen und Musikern – offline.",
+  "description": "FixClever 2.0.0: 637 Grundthemen und 2.363 thematisch zugeordnete Vertiefungen mit Offline-Lernhilfe, Musikwerkstatt, Geschichte und Mathe.",
   "lang": "de-DE",
   "start_url": "./index.html",
   "scope": "./",

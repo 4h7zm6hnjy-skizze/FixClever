@@ -1,11 +1,15 @@
-FixClever Version 1.9.3 – Musik-Werkstatt + vollständig offline
+FixClever 2.0.0 – 3.000 Lerneinheiten, vollständig offline nach erfolgreichem Download
 
-In GitHub im Stammverzeichnis die drei Dateien index.html, sw.js und manifest.webmanifest durch die Dateien aus diesem Paket ersetzen. Weitere Dateien und Logos unverändert lassen.
+GitHub: https://github.com/4h7zm6hnjy-skizze/FixClever
 
-Einmal online laden und warten, bis die Offline-Meldung erscheint. Danach die Musik-Werkstatt unter dem Fach Musik öffnen.
+1. Dieses ZIP entpacken.
+2. index.html, sw.js und manifest.webmanifest im Hauptordner des Repositorys ersetzen.
+3. Alle alten Bild- und JavaScript-Dateien unbedingt erhalten.
+4. Website mit Internetverbindung öffnen und auf bestätigte Offline-Bereitschaft warten.
+5. Über „637 Grundthemen“, „2.363 Vertiefungen“ und „Alle 3.000“ auswählen.
+6. Anschließend Flugmodus einschalten und über das Startbildschirm-Symbol testen.
 
-Die Kinderprofile, Lernergebnisse und bereits gespeicherten Unterrichtsthemen bleiben unverändert.
+Wichtige fachliche Einordnung:
+637 bisherige voll angelegte Grundthemen plus 2.363 neue, fokussierte Wiederholungs- und Vertiefungsbausteine aus deren bestehenden Lerninhalten. Es sind NICHT 3.000 unterschiedliche Lehrplan-Kapitel. Die Vertiefungen verwenden die originalen zehn Fragen des zugehörigen Grundthemas in anderer Reihenfolge, damit keine ungeprüften Antworten erfunden werden.
 
-Neue Inhalte: 128 eigenständige Musik-Lektionen, 1280 Testfragen und interaktive Offline-Musik-Werkstatt.
-
-Wichtiger Hinweis: Ein AudioContext benötigt eventuell eine direkte Bildschirmberührung, um Ton zu spielen. Die App benötigt kein Netzwerk für die Tonausgabe. Die historischen Musikdaten und die Lehrplanabdeckung sind keine offizielle NRW-Zertifizierung.
+Profile, Noten, Lernsterne, Markierungen und ältere Inhalte bleiben im bisherigen lokalen Speicher. Vor größeren iPhone-Änderungen empfiehlt sich eine Datensicherung. Die Inhalte sind nicht amtlich als vollständiger NRW-Lehrplan geprüft.
