@@ -1,23 +1,18 @@
-FixClever 2.2.0 – Gesamtupdate (Lernzentrale)
+FixClever 2.2.1 – korrigierte Lernzentrale
 
-INSTALLATION
-1. ZIP entpacken.
-2. Auf GitHub (4h7zm6hnjy-skizze/FixClever) in main hochladen:
-   - index.html
-   - sw.js
-   - manifest.webmanifest
-3. Diese drei vorhandenen Dateien ersetzen und den Commit abschließen.
-4. FixClever online öffnen; auf die Bereitmeldung für den Offline-Cache warten.
-5. Offline-Start anschließend im Flugmodus über das Home-Bildschirm-Symbol testen.
+Dieses Paket ersetzt eine unvollständige 2.2.0-Ausgabe.
 
-NEU: Lernzentrale (Lerncoach, Übungstrainer, Spiele, Wiederholungen, Statistik, Elternbereich, Lehrplan-Navigator, Datensicherung), zusätzliche Schulbuch-Hilfe und kleinere Antwortauswahl für Klasse 1–4.
-Die bisherigen 3.100 Lerneinheiten und Profile werden unverändert übernommen.
+Installation:
+1. Die drei Dateien index.html, sw.js, manifest.webmanifest im Hauptordner des GitHub-Repositorys ersetzen.
+2. GitHub-Änderungen mit "Commit changes" speichern.
+3. Die App anschließend online öffnen und auf die neue Offline-Speicherung warten.
+4. Die neue Lernzentrale über die Schaltfläche am unteren Bildschirmrand öffnen.
 
-WICHTIG: Der Lerncoach ist regelbasiert, nicht KI-gesteuert. Die neuen Trainer sind
-eine erste Aufgabensammlung, keine vollständig überarbeitete Fachdatenbank.
-Ein lückenloser Abgleich aller NRW-Kompetenzen sowie die fachliche Prüfung aller
-bisherigen Tests sind nicht abgeschlossen.
+Daten:
+Die vorhandenen FixClever-Datenschlüssel werden nicht geändert.
+Unter Eltern & Backup lassen sich die lokalen App-Daten exportieren und wiederherstellen.
+Vor einem Import unbedingt die bisherigen Daten sichern.
 
-Bitte vor größeren Änderungen im Eltern-/Backup-Bereich eine Datensicherung erstellen.
-Das Löschen einer installierten Web-App unter iOS kann lokal gespeicherte Daten löschen.
-NRW-Quelllinks und das Suchen nach Updates benötigen weiterhin Internet.
+Hinweis zur Qualität:
+Die neue Lernzentrale bietet einen regelbasierten Lerncoach, eine ausgewählte Aufgabenbank, Lernspiele, Wochenziel, Statistik, Lernhilfe und einen Lehrplan-Hinweis.
+Nicht alle 3.100 Einheiten sind individuell fachlich oder curricular geprüft. Die NRW-Lehrplanübersicht ist noch keine verbindliche amtliche Vollständigkeitsprüfung.
