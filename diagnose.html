@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>FixClever – Technische Diagnose</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#193a31;background:#f1f6f3}
+body{margin:0;padding:18px}main{max-width:760px;margin:auto}h1{font-size:26px}h2{font-size:19px}
+section{background:white;padding:19px;border-radius:15px;margin:14px 0;border:1px solid #c9d9d2}
+button,a.action{border:0;background:#1b765b;color:white;border-radius:9px;padding:13px 17px;font:inherit;font-weight:650;text-decoration:none;display:inline-block;cursor:pointer}
+button:disabled{opacity:.5}.ok{color:#12613f}.bad{color:#a82c34}.pending{color:#6d6c64}
+li{padding:7px 2px;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eef2ef;border-radius:10px;padding:12px;max-height:250px;overflow:auto}
+small{color:#566c65}#copy{background:#385c6d}
+</style></head><body><main>
+<h1>FixClever – technische Diagnose</h1>
+<p>Diese Seite überprüft die veröffentlichten App-Dateien auf Erreichbarkeit und Version. Sie liest keine Profile oder Lernstatistiken.</p>
+<section><button id="go">Prüfung starten</button> <button id="copy" disabled>Ergebnis kopieren</button><p id="status" role="status">Bereit.</p></section>
+<section><h2>Prüfergebnisse</h2><ol id="results"><li>Prüfung noch nicht gestartet.</li></ol></section>
+<section><a class="action" href="./repair.html">Alten Cache entfernen</a> <a class="action" href="./index.html">FixClever öffnen</a></section>
+<section><h2>Technische Daten</h2><pre id="detail">–</pre><small>Eine positive Dateiprüfung bestätigt noch nicht, dass alle Lerninhalte und Bedienelemente im Browser funktionieren.</small></section>
+</main><script>
+(()=>{
+'use strict';
+const files=['index.html','style.css','lessons.js','questions.js','curriculum-extra.js','fc231-inhalte.js',
+'app.js','quiz.js','fc231-tests.js','fc233-lernhilfen.js','sw.js','version.json','repair.html'];
+const go=document.getElementById('go'),copy=document.getElementById('copy'),out=document.getElementById('results');
+const status=document.getElementById('status'),details=document.getElementById('detail');
+let report=[];
+async function check(name){
+ const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),30000);
+ try{
+  const url=new URL('./'+name,location.href);url.searchParams.set('fc-diagnostic',String(Date.now()));
+  const response=await fetch(url.href,{cache:'no-store',signal:ctl.signal});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  const text=await response.text();
+  if(text.length<4)throw new Error('Datei ist leer');
+  const problems=[];
+  if(name==='index.html'&&!text.includes('fc233-progressive-loader'))problems.push('Startprogramm nicht gefunden');
+  if(name==='fc231-tests.js'&&!text.includes('authored-answers'))problems.push('Qualitätsreparatur noch nicht veröffentlicht');
+  if(name==='sw.js'&&!text.includes('quality-20261013'))problems.push('Offline-Reparatur noch nicht veröffentlicht');
+  if(name==='version.json'){
+   try{if(JSON.parse(text).version!=='2.3.3')problems.push('Versionsnummer passt nicht zu index.html (2.3.3)');}
+   catch{problems.push('Ungültiges JSON');}
+  }
+  if(name==='fc231-inhalte.js'&&text.length<1000000)problems.push('Inhaltsdatei ist unerwartet klein');
+  if(problems.length)throw new Error(problems.join('; '));
+  return {file:name,ok:true,characters:text.length};
+ }catch(e){return{file:name,ok:false,error:e?.name==='AbortError'?'Zeitüberschreitung (30 Sekunden)':String(e?.message||e)};}
+ finally{clearTimeout(timer);}
+}
+function render(){
+ out.replaceChildren(...report.map(r=>{const li=document.createElement('li');li.className=r.ok?'ok':'bad';
+  li.textContent=(r.ok?'OK – ':'FEHLER – ')+r.file+(r.ok?' ('+r.characters+' Zeichen)':' – '+r.error);return li;}));
+ const fail=report.filter(r=>!r.ok).length;
+ status.textContent='Geprüft: '+report.length+' / '+files.length+'. '+fail+' Auffälligkeiten.';
+ details.textContent=JSON.stringify({checkedAt:new Date().toISOString(),location:location.href,results:report},null,2);
+}
+go.addEventListener('click',async()=>{
+ go.disabled=true;copy.disabled=true;report=[];out.replaceChildren();status.textContent='Dateien werden geprüft …';
+ for(const f of files){report.push(await check(f));render();}
+ go.disabled=false;copy.disabled=false;
+});
+copy.addEventListener('click',async()=>{
+ const data=details.textContent;
+ try{await navigator.clipboard.writeText(data);status.textContent='Diagnosebericht kopiert.';}
+ catch{status.textContent='Kopieren nicht möglich. Bitte den Bericht markieren und kopieren.';}
+});
+})();
+</script></body></html>

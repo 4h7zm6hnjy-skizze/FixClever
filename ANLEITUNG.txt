@@ -1,29 +1,51 @@
-FIXCLEVER – STARTREPARATUR (Hotfix fuer den Lade-Stopp bei fc231-tests.js)
+FIXCLEVER 2.3.3 – QUALITÄTS- UND STABILITÄTSKORREKTUR (13.10.2026)
+==============================================================
+
+ACHTUNG: Dieses Paket ist NICHT automatisch bei GitHub eingespielt.
+Die verbundene GitHub-Integration kann aktuell nur lesen (HTTP 403 beim Schreiben).
 
 GitHub-Repository:
 https://github.com/4h7zm6hnjy-skizze/FixClever
 
-1. ZIP auf dem iPhone/Mac entpacken. In GitHub das Repository FixClever oeffnen.
-2. Add file -> Upload files (Dateien hochladen) waehlen.
-3. BEIDE Dateien aus diesem Ordner direkt ins HAUPTVERZEICHNIS hochladen:
-   - fc231-tests.js (bestehende Datei ersetzen)
-   - repair.html (neu)
-   Keine Unterordner anlegen.
-4. Commit changes klicken und warten, bis GitHub Pages neu bereitsteht.
-5. Bei GitHub Pages im Browser DIESE Adresse einmal oeffnen:
+1. Erstelle vor dem Update ein Backup bestehender Kinderprofile über die
+   Exportfunktion von FixClever, sofern die App dafür noch bedienbar ist.
+2. Entpacke die ZIP-Datei.
+3. Lade GENAU die folgenden Dateien in das HAUPTVERZEICHNIS des GitHub-Repositories:
+     fc231-tests.js
+     sw.js
+     version.json
+     repair.html
+     diagnose.html
+   Bestehende Dateien gleichnamig ersetzen. Die Dateien NICHT in einen
+   Unterordner verschieben. 'index.html' und die großen Inhalte NICHT löschen.
+4. Nach der Veröffentlichung im Safari auf dem betroffenen Gerät öffnen:
    https://4h7zm6hnjy-skizze.github.io/FixClever/repair.html
-   Dort auf 'FixClever oeffnen' tippen.
-6. Die Faecher und Testbereiche erneut pruefen.
+   Danach 'FixClever öffnen' auswählen.
+5. Diagnoseseite öffnen und auf 'Prüfung starten' tippen:
+   https://4h7zm6hnjy-skizze.github.io/FixClever/diagnose.html
+   Bei Fehlern 'Ergebnis kopieren' verwenden und zur Prüfung mitteilen.
+6. Einen Test mit zehn Fragen absolvieren, speichern, die App schließen und
+   erneut öffnen. Statistiken/Profilwechsel prüfen. Offline nur testen,
+   nachdem 'Offline bereit' angezeigt wird.
 
-WARUM:
-Die alte fc231-tests.js sortiert fuer viele Aufgaben die gesamten falschen
-Antworten mehrfach. Die neue Version nutzt einen vorberechneten Suchindex
-und begrenzt die Suche. Sie behaelt das vorhandene Quiz-, Profil- und
-Lernsterne-System bei. Reparaturseite leert nur den Dateicache, keine
-Lernprofile, lokale Testergebnisse oder andere Benutzerdaten.
+WAS SICH ÄNDERT
+- Zehn Aufgaben pro Test bleiben erhalten; die ORIGINALEN Antwortmöglichkeiten
+  werden nicht mehr durch ungeprüfte Ablenkungsantworten aufgebläht.
+- Die aktuelle Frage kann daher 2, 3 oder mehr Antwortmöglichkeiten haben;
+  die bisherige Behauptung 'jeweils 10 Antwortmöglichkeiten' entfällt.
+- Alte Testergebnisse werden mit ihrer gespeicherten Punktzahl möglichst
+  weitergeführt. Eine vorher bereits gelöschte Statistik kann dieses Update
+  NICHT wiederherstellen. Deshalb Backup prüfen.
+- Das große Inhaltsmodul und das Design bleiben unverändert.
+- Die alte Cache-Kennung wird ersetzt; JS/CSS laden online zuerst die
+  aktuelle Version und nutzen nur offline den gespeicherten Stand.
+- 'version.json' stimmt danach mit dem HTML-Metatag 2.3.3 überein.
+- 'diagnose.html' prüft 13 Dateien auf Erreichbarkeit/grundlegende Plausibilität.
 
-WICHTIG:
-Das ist ein gezielter Start-Fix fuer Version 2.3.3 und KEINE vollstaendige
-Funktionszertifizierung aller Unterrichtsinhalte. Der GitHub-Schreibzugriff
-wurde vom verbundenen Konto mit Fehler 403 abgelehnt; ein automatischer
-Upload war deshalb nicht moeglich.
+WICHTIG
+- Das Update ist ein Sicherheits-/Qualitätshotfix innerhalb 2.3.3 und keine
+  vollständige 2.3.4-Version. Deshalb bleibt die angezeigte App-Version 2.3.3.
+- Die 3,9-MB-Datendatei und 'index.html' wurden nicht verändert.
+- Nicht alle historischen Lerninhalte konnten eingesehen werden. Insbesondere
+  die Korrektheit von 3.100 Einheiten sowie ein echter iPhone-End-to-End-Test
+  sind noch OFFEN. Das Paket garantiert keine vollständige Fehlerfreiheit.

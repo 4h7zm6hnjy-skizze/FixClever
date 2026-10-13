@@ -1,148 +1,81 @@
-/* FixClever 2.3.3 performance hotfix (2026-10-13).
-   Ersetzt ausschliesslich die blockierende Aufgabenaufbereitung; vorhandene Daten bleiben erhalten. */
+/* FixClever 2.3.3 quality and history safeguard, 2026-10-13.
+   Preserves authored questions and original correct answers.
+   Previous auto-generated answer pools could introduce misleading distractors.
+   Existing profiles/attempts are never intentionally reset or deleted. */
 (()=>{
 'use strict';
-const ORIGINAL={};
-for(const [id,items] of Object.entries(QUESTIONS)) ORIGINAL[id]=items.map(q=>({...q,options:[...q.options]}));
-const lessonFor=new Map(LESSONS.map(l=>[l.id,l]));
-const rows=[];
-for(const [lessonId,bank] of Object.entries(ORIGINAL)){
- if(lessonId.startsWith('fc15_')||lessonId.startsWith('fc16_'))continue;
- const lesson=lessonFor.get(lessonId);if(!lesson)continue;
- for(const q of bank)rows.push({lessonId,subject:lesson.subject,grade:lesson.grade,q});
-}
-const binary=q=>q.options.length===2&&q.options.includes('Stimmt')&&q.options.includes('Stimmt nicht');
-const claim=q=>String(q.prompt).replace(/^\s*Stimmt\s+das\?\s*/i,'').trim();
-const norm=v=>{const t=String(v).normalize('NFKC').toLocaleLowerCase('de-DE').replace(/\s+/g,' ').trim();return t.length<=2?t:t.replace(/[.!?]+$/,'');};
-const FALSE=rows.filter(x=>binary(x.q)&&x.q.options[x.q.answer]==='Stimmt nicht').map(x=>({...x,text:claim(x.q)}));
-const TRUE=rows.filter(x=>binary(x.q)&&x.q.options[x.q.answer]==='Stimmt').map(x=>({...x,text:claim(x.q)}));
-const WRONG=rows.flatMap(x=>binary(x.q)?[]:x.q.options.filter((v,i)=>i!==x.q.answer).map(text=>({...x,text:String(text)})));
-function uniq(arr,text,seen){const t=String(text||'').trim(),k=norm(t);if(!k||seen.has(k))return false;seen.add(k);arr.push(t);return true;}
-function numericPattern(text){const m=String(text).trim().match(/^([−+\-]?\d+(?:[.,]\d+)?)(\s*(?:%|€|cm|mm|km|m|kg|g|mg|ml|l|h|min|s|°|m²|cm²)?)$/i);return m||null;}
-function shape(str){const s=String(str).trim();if(numericPattern(s))return 'numeric';if(/^\d+\s+Rest\s+\d+$/i.test(s))return 'remainder';if(s.length<35&&!/[.!?]/.test(s))return 'short';return 'phrase';}
-// Previous implementation re-sorted every distractor in every test question.
-// That is quadratic and can freeze iOS Safari. Here we index once per pool.
-const rankCache=new WeakMap();
-function rank(pool,x,wantedShape){
- let index=rankCache.get(pool);
- if(!index){
-  index={lesson:new Map(),subjectGrade:new Map(),subject:new Map(),grade:new Map(),shape:new Map(),all:pool};
-  const add=(m,k,v)=>{let group=m.get(k);if(!group){group=[];m.set(k,group);}group.push(v);};
-  for(const v of pool){
-   add(index.lesson,v.lessonId,v);
-   add(index.subjectGrade,v.subject+'|'+v.grade,v);
-   add(index.subject,v.subject,v);
-   add(index.grade,v.grade,v);
-   add(index.shape,shape(v.text),v);
+// Keep lessons and questions as published by their authored source files.
+// A test is always ten QUESTIONS; a question does not need ten answer choices.
+const originalBanks=new Map(Object.entries(QUESTIONS).map(([id,bank])=>[id,new Map(bank.map(q=>[q.id,q]))]));
+const isKnownLesson=id=>validIds.has(id)&&originalBanks.has(id);
+const originalValidator=cleanAttempt;
+cleanAttempt=function(attempt){
+  // Recognize current, verifiable attempts first. Store pre-upgrade results without
+  // recalculating against a different or artificially-expanded answer list.
+  if(!attempt||!isKnownLesson(attempt.lessonId)||!Number.isInteger(attempt.correct)||attempt.correct<0||attempt.correct>10||attempt.total!==10||!Number.isFinite(Date.parse(attempt.date))||!Array.isArray(attempt.answers)||attempt.answers.length!==10)return null;
+  const bank=originalBanks.get(attempt.lessonId),seen=new Set();
+  for(const response of attempt.answers){
+    if(!response||typeof response.questionId!=='string'||typeof response.selected!=='string'||response.selected.length>1200||seen.has(response.questionId)||!bank.has(response.questionId))return null;
+    seen.add(response.questionId);
   }
-  rankCache.set(pool,index);
- }
- const seed=[...String(x.q.id)].reduce((n,c)=>(Math.imul(n,31)+c.charCodeAt(0))>>>0,2166136261);
- const candidates=[],visited=new Set(),limit=96;
- function add(group,maxScan){
-  if(!group||candidates.length>=limit)return;
-  const start=seed%group.length,scans=Math.min(group.length,maxScan);
-  for(let k=0;k<scans&&candidates.length<limit;k++){
-   const v=group[(start+k)%group.length];
-   if(v.q.id===x.q.id||visited.has(v))continue;
-   if(wantedShape&&shape(v.text)!==wantedShape)continue;
-   visited.add(v);candidates.push(v);
-  }
- }
- add(index.lesson.get(x.lessonId),64);
- add(index.subjectGrade.get(x.subject+'|'+x.grade),96);
- add(index.subjectGrade.get(x.subject+'|'+(x.grade-1)),32);
- add(index.subjectGrade.get(x.subject+'|'+(x.grade+1)),32);
- add(index.subject.get(x.subject),128);
- add(index.grade.get(x.grade),64);
- if(wantedShape)add(index.shape.get(wantedShape),128);
- add(index.all,128);
- return candidates;
-}
-function numericWrong(correct){
- const m=numericPattern(correct);if(!m)return [];
- const val=Number(m[1].replace('−','-').replace(',','.'));if(!Number.isFinite(val))return [];
- const fmt=m[1].includes(',')?',':m[1].includes('.')?'.':null,dp=fmt?m[1].split(fmt)[1].length:0,step=Math.pow(10,-dp);
- return [-1,1,-2,2,-3,3,-4,4,-5,5,-6,6,-8,8,-10,10,-12,12,-15,15].map(delta=>{
-  const n=val+delta*step;if(n<0&&val>=0||!Number.isFinite(n))return null;
-  return (dp?n.toFixed(dp).replace('.',fmt):String(n))+m[2];
- }).filter(Boolean);
-}
-function remainderWrong(correct){
- const m=String(correct).trim().match(/^(\d+)\s+Rest\s+(\d+)$/i);if(!m)return [];
- const a=Number(m[1]),b=Number(m[2]),out=[];
- for(const dx of [-1,1,-2,2,-3,3,4])for(const dy of [-1,1,2,-2,3])if(a+dx>=0&&b+dy>=0)out.push(`${a+dx} Rest ${b+dy}`);
- return out;
-}
-const unresolved=[];
-for(const x of rows){
- const q=x.q,correct=q.options[q.answer],opts=[],seen=new Set();let answer=0,prompt=q.prompt;
- if(q.id==='nrw13_16q5'){
-  for(const v of ['¿','!',';','¡','?',':','«','»','.','—'])uniq(opts,v,seen);
-  answer=0;
- }else if(binary(q)){
-  let chosenCorrect=q.options[q.answer]==='Stimmt'?claim(q):String(q.explanation).trim();
-  if(chosenCorrect.length<10||/^(?:das|diese|sie|er|es|hier|nein|ja|falsch|richtig)\b/i.test(chosenCorrect)||!/[.?!]$/.test(chosenCorrect)){
-   chosenCorrect=rank(TRUE,x).find(v=>v.lessonId===x.lessonId)?.text||rank(TRUE,x)[0]?.text||chosenCorrect;
-  }
-  uniq(opts,chosenCorrect,seen);
-  for(const candidate of rank(FALSE,x)){
-   if(opts.length>=10)break;
-   if(norm(candidate.text)===norm(chosenCorrect))continue;
-   uniq(opts,candidate.text,seen);
-  }
-  prompt='Welche Aussage ist richtig?';
- }else{
-  for(const value of q.options.map(String))uniq(opts,value,seen);
-  answer=opts.findIndex(v=>norm(v)===norm(correct));
-  const sig=shape(correct);
-  if(sig==='numeric'||sig==='remainder')for(const v of(sig==='numeric'?numericWrong(correct):remainderWrong(correct))){if(opts.length>=10)break;uniq(opts,v,seen);}
-  if(opts.length<10)for(const candidate of rank(WRONG,x,sig)){
-   if(opts.length>=10)break;
-   if(sig==='short'){
-    const ratio=candidate.text.length/Math.max(1,String(correct).length);
-    if(ratio>2.5||ratio<0.35)continue;
-   }
-   uniq(opts,candidate.text,seen);
-  }
- }
- if(opts.length===10&&new Set(opts.map(norm)).size===10&&answer>=0&&answer<10){
-  if(binary(q))answer=0;
-  const live=QUESTIONS[x.lessonId].find(y=>y.id===q.id);
-  live.prompt=prompt;live.options=[...opts];live.answer=answer;
- }else unresolved.push(q.id);
-}
-// Preserve previously saved quiz answers and existing child profiles.
-cleanAttempt=function(a){
- if(!a||!validIds.has(a.lessonId)||!Number.isInteger(a.correct)||a.correct<0||a.correct>10||a.total!==10||!Number.isFinite(Date.parse(a.date))||!Array.isArray(a.answers)||a.answers.length!==10)return null;
- const old=ORIGINAL[a.lessonId],now=QUESTIONS[a.lessonId];if(!old||!now)return null;
- const used=new Set();let correct=0;
- for(const ans of a.answers){
-  if(used.has(ans.questionId))return null;used.add(ans.questionId);
-  const orig=old.find(q=>q.id===ans.questionId),next=now.find(q=>q.id===ans.questionId);
-  if(!orig||!next)return null;
-  const validOld=orig.options.includes(ans.selected),validNew=next.options.includes(ans.selected);
-  if(!validOld&&!validNew)return null;
-  const chosen=validOld?orig:next;
-  if(ans.selected===chosen.options[chosen.answer])correct++;
- }
- if(correct!==a.correct)return null;
- return {id:String(a.id),lessonId:a.lessonId,date:a.date,total:10,correct,answers:a.answers.map(x=>({questionId:x.questionId,selected:x.selected}))};
+  // A historical correct count is kept as recorded. Renaming or reformatting
+  // answer choices must not erase a child's entire learning history.
+  const saved=originalValidator(attempt);
+  if(saved)return saved;
+  return {id:String(attempt.id||''),lessonId:attempt.lessonId,date:attempt.date,total:10,correct:attempt.correct,
+          answers:attempt.answers.map(a=>({questionId:a.questionId,selected:a.selected}))};
 };
-profileData=loadProfiles();applyChild();profileButton();
-const priorResult=showResult;
-showResult=function(a,stored){
- const hadLegacy=a?.answers?.some(ans=>{const orig=ORIGINAL[a.lessonId]?.find(q=>q.id===ans.questionId);return orig&&binary(orig)&&orig.options.includes(ans.selected);});
- if(hadLegacy){const saved=QUESTIONS[a.lessonId];QUESTIONS[a.lessonId]=ORIGINAL[a.lessonId];try{return priorResult(a,stored);}finally{QUESTIONS[a.lessonId]=saved;}}
- return priorResult(a,stored);
+// quiz.js loads and validates profiles before this file. Validate again using
+// the compatibility rules, without resetting the active profile.
+try{profileData=loadProfiles();applyChild();profileButton();}
+catch(error){console.warn('FixClever profile recovery:',error.message);}
+const showResultBeforeSafeguard=showResult;
+showResult=function(attempt,stored){
+ const result=showResultBeforeSafeguard(attempt,stored);
+ if(!attempt?.answers||!originalBanks.has(attempt.lessonId))return result;
+ const bank=originalBanks.get(attempt.lessonId);
+ const historical=attempt.answers.some(a=>{const q=bank.get(a.questionId);return q&&!q.options.includes(a.selected);});
+ if(historical){
+  const hero=document.querySelector('#quiz-area .result-hero');
+  if(hero&&!hero.querySelector('.fc-historical-result')){
+   const note=document.createElement('p');note.className='fc-historical-result';
+   note.textContent='Historischer Test: Die ursprüngliche Punktzahl bleibt erhalten. Einige damalige Antwortmöglichkeiten wurden inzwischen überarbeitet.';
+   hero.append(note);
+  }
+ }
+ return result;
 };
-const prevRender=renderQuiz;
-renderQuiz=function(){prevRender();const note=document.querySelector('#quiz-area .answer-options+p');if(note)note.textContent='Eine von zehn Antworten auswählen. Die Lösungen erscheinen nach der Abgabe.';};
-const priorReader=renderReader;
-renderReader=function(){priorReader();const p=document.querySelector('#reader .test-invite p');if(p)p.textContent=p.textContent.replace('10 Aufgaben','10 Aufgaben · jeweils 10 Antwortmöglichkeiten');};
-window.FixCleverAnswerAudit=Object.freeze({total:rows.length,tenChoices:rows.length-unresolved.length,pending:unresolved.slice(),revisionsRequireReview:true});
-if(unresolved.length)console.warn('Einige Aufgaben bleiben bei der vorhandenen Antwortzahl. Anzahl:',unresolved.length,'Beispiele:',unresolved.slice(0,10));
+// Install the example guard after all queued modules have installed their
+// renderReader wrappers. The bootloader dispatches DOMContentLoaded at the end.
+function installExamplesGuard(){
+ if(typeof renderReader!=='function'||renderReader.__fcQualityExamples)return;
+ const previous=renderReader;
+ function guardedReader(){
+  const result=previous();
+  try{
+   const lesson=state.lesson,box=document.querySelector('#reader .example-box');
+   if(!lesson||!box)return result;
+   const content=(Array.isArray(lesson.examples)&&lesson.examples.length?lesson.examples:[lesson.example]).filter(x=>typeof x==='string'&&x.trim());
+   const current=box.querySelectorAll('li');
+   // Do not wipe worked examples supplied by specific subject modules.
+   if(current.length&&Array.from(current).some(x=>x.textContent.trim()))return result;
+   if(!content.length){box.hidden=true;return result;}
+   box.hidden=false;
+   const heading=document.createElement('h3');heading.textContent=content.length===1?'Beispiel zum Nachvollziehen':content.length+' Beispiele zum Nachvollziehen';
+   const list=document.createElement('ol');
+   for(const example of content.slice(0,5)){const item=document.createElement('li');item.textContent=example;list.append(item);}
+   box.replaceChildren(heading,list);
+  }catch(e){console.warn('FixClever examples:',e.message);}
+  return result;
+ }
+ guardedReader.__fcQualityExamples=true;
+ renderReader=guardedReader;
+}
+window.addEventListener('DOMContentLoaded',installExamplesGuard,{once:true});
+window.FixCleverAnswerAudit=Object.freeze({mode:'authored-answers',questionCount:Object.values(QUESTIONS).reduce((n,b)=>n+b.length,0),autoGeneratedDistractors:0,historyPreservation:true});
 })();
+
+;
 
 /* Lernsterne & Abzeichen: unchanged rules, data remains only in local browser storage. */
 (()=>{
