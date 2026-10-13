@@ -1,15 +1,17 @@
-FixClever 2.0.0 – 3.000 Lerneinheiten, vollständig offline nach erfolgreichem Download
+FixClever 2.1.0 – Kernfächer-Update (Deutsch, Mathe, Englisch)
 
-GitHub: https://github.com/4h7zm6hnjy-skizze/FixClever
+NEU: 100 eigenständige Lernlektionen: Deutsch 30, Mathematik 40, Englisch 30.
+Damit enthält FixClever 3.100 Lerneinheiten insgesamt: 737 Grundthemen und 2.363 Vertiefungen aus den Grundthemen. Vertiefungen sind Wiederholungsinhalte, keine eigenständigen amtlichen Lehrplankapitel.
 
-1. Dieses ZIP entpacken.
-2. index.html, sw.js und manifest.webmanifest im Hauptordner des Repositorys ersetzen.
-3. Alle alten Bild- und JavaScript-Dateien unbedingt erhalten.
-4. Website mit Internetverbindung öffnen und auf bestätigte Offline-Bereitschaft warten.
-5. Über „637 Grundthemen“, „2.363 Vertiefungen“ und „Alle 3.000“ auswählen.
-6. Anschließend Flugmodus einschalten und über das Startbildschirm-Symbol testen.
+INSTALLATION AUF GITHUB
+1. ZIP entpacken. Ersetze im Hauptverzeichnis index.html, sw.js, manifest.webmanifest.
+2. Alle vorhandenen Bilder und JavaScript-Dateien (lessons.js, questions.js, app.js, quiz.js usw.) unbedingt behalten.
+3. Website mit Internet öffnen und Offline-Bereitmeldung abwarten.
+4. Klasse und Deutsch, Mathe oder Englisch wählen. Unter Grundthemen sind die neuen Lektionen zu finden.
+5. Offline testen: Flugmodus einschalten, über den iPhone-Homebildschirm neu starten.
 
-Wichtige fachliche Einordnung:
-637 bisherige voll angelegte Grundthemen plus 2.363 neue, fokussierte Wiederholungs- und Vertiefungsbausteine aus deren bestehenden Lerninhalten. Es sind NICHT 3.000 unterschiedliche Lehrplan-Kapitel. Die Vertiefungen verwenden die originalen zehn Fragen des zugehörigen Grundthemas in anderer Reihenfolge, damit keine ungeprüften Antworten erfunden werden.
+VERWENDETE LOKALE DATEN
+Die vorhandenen Lernprofile und Noten bleiben in LocalStorage. Keine bestehenden Lektions-IDs oder Fragen wurden verändert. Vor einem Löschen der App bitte Statistiken sichern.
 
-Profile, Noten, Lernsterne, Markierungen und ältere Inhalte bleiben im bisherigen lokalen Speicher. Vor größeren iPhone-Änderungen empfiehlt sich eine Datensicherung. Die Inhalte sind nicht amtlich als vollständiger NRW-Lehrplan geprüft.
+WICHTIG
+Die 100 neuen Lektionen enthalten je fünf Beispiele und zehn Zuordnungs- oder Rechenfragen. Es besteht keine amtlich verifizierte Vollständigkeit aller NRW-Lehrpläne. Einige automatisch erzeugte Auswahlmöglichkeiten können pädagogisch zu leicht sein. Inhalte und Beispielfälle sind für Kinder mit unterschiedlichem Förderbedarf weiter zu überarbeiten.
