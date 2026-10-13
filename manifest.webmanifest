@@ -2,7 +2,7 @@
   "id": "./",
   "name": "FixClever – Dein Lernraum",
   "short_name": "FixClever",
-  "description": "FixClever 2.1.0: 3.100 Lerneinheiten, darunter 100 neue eigenständige Unterrichtsthemen in Deutsch, Mathe und Englisch, vollständig offline nach dem ersten Laden.",
+  "description": "FixClever 2.2.0: 3.100 Lerneinheiten, mit Lerncoach, Lernspielen, Übungstrainern, Wiederholungen, Lernstatistik und Datensicherung – offline nach dem ersten Laden.",
   "lang": "de-DE",
   "start_url": "./index.html",
   "scope": "./",

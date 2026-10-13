@@ -1,20 +1,20 @@
-/* FixClever 2.1.0 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
+/* FixClever 2.2.0 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
 'use strict';
-const VERSION='2.1.0';
-const CACHE='fixclever-core-'+VERSION+'-3100-kernfaecher';
+const VERSION='2.2.0';
+const CACHE='fixclever-core-'+VERSION+'-lernzentrale-gesamtpaket-2026-10';
 const CORE=[
  './index.html', './',
- './style.css?v=2.1.0',
- './lessons.js?v=2.1.0',
- './questions.js?v=2.1.0',
- './curriculum-extra.js?v=2.1.0',
- './app.js?v=2.1.0',
- './subjects-extra.js?v=2.1.0',
- './quiz.js?v=2.1.0',
- './examples-extra.js?v=2.1.0',
+ './style.css?v=2.2.0',
+ './lessons.js?v=2.2.0',
+ './questions.js?v=2.2.0',
+ './curriculum-extra.js?v=2.2.0',
+ './app.js?v=2.2.0',
+ './subjects-extra.js?v=2.2.0',
+ './quiz.js?v=2.2.0',
+ './examples-extra.js?v=2.2.0',
  './icon.svg',
  './icon-192.png', './icon-512.png', './apple-touch-icon.png', './favicon-32.png',
- './manifest.webmanifest?v=2.1.0'
+ './manifest.webmanifest?v=2.2.0'
 ];
 const urls=CORE.map(p=>new URL(p,self.registration.scope).href);
 const indexUrl=new URL('./index.html',self.registration.scope).href;

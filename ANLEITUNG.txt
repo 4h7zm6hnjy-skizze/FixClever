@@ -1,17 +1,23 @@
-FixClever 2.1.0 – Kernfächer-Update (Deutsch, Mathe, Englisch)
+FixClever 2.2.0 – Gesamtupdate (Lernzentrale)
 
-NEU: 100 eigenständige Lernlektionen: Deutsch 30, Mathematik 40, Englisch 30.
-Damit enthält FixClever 3.100 Lerneinheiten insgesamt: 737 Grundthemen und 2.363 Vertiefungen aus den Grundthemen. Vertiefungen sind Wiederholungsinhalte, keine eigenständigen amtlichen Lehrplankapitel.
+INSTALLATION
+1. ZIP entpacken.
+2. Auf GitHub (4h7zm6hnjy-skizze/FixClever) in main hochladen:
+   - index.html
+   - sw.js
+   - manifest.webmanifest
+3. Diese drei vorhandenen Dateien ersetzen und den Commit abschließen.
+4. FixClever online öffnen; auf die Bereitmeldung für den Offline-Cache warten.
+5. Offline-Start anschließend im Flugmodus über das Home-Bildschirm-Symbol testen.
 
-INSTALLATION AUF GITHUB
-1. ZIP entpacken. Ersetze im Hauptverzeichnis index.html, sw.js, manifest.webmanifest.
-2. Alle vorhandenen Bilder und JavaScript-Dateien (lessons.js, questions.js, app.js, quiz.js usw.) unbedingt behalten.
-3. Website mit Internet öffnen und Offline-Bereitmeldung abwarten.
-4. Klasse und Deutsch, Mathe oder Englisch wählen. Unter Grundthemen sind die neuen Lektionen zu finden.
-5. Offline testen: Flugmodus einschalten, über den iPhone-Homebildschirm neu starten.
+NEU: Lernzentrale (Lerncoach, Übungstrainer, Spiele, Wiederholungen, Statistik, Elternbereich, Lehrplan-Navigator, Datensicherung), zusätzliche Schulbuch-Hilfe und kleinere Antwortauswahl für Klasse 1–4.
+Die bisherigen 3.100 Lerneinheiten und Profile werden unverändert übernommen.
 
-VERWENDETE LOKALE DATEN
-Die vorhandenen Lernprofile und Noten bleiben in LocalStorage. Keine bestehenden Lektions-IDs oder Fragen wurden verändert. Vor einem Löschen der App bitte Statistiken sichern.
+WICHTIG: Der Lerncoach ist regelbasiert, nicht KI-gesteuert. Die neuen Trainer sind
+eine erste Aufgabensammlung, keine vollständig überarbeitete Fachdatenbank.
+Ein lückenloser Abgleich aller NRW-Kompetenzen sowie die fachliche Prüfung aller
+bisherigen Tests sind nicht abgeschlossen.
 
-WICHTIG
-Die 100 neuen Lektionen enthalten je fünf Beispiele und zehn Zuordnungs- oder Rechenfragen. Es besteht keine amtlich verifizierte Vollständigkeit aller NRW-Lehrpläne. Einige automatisch erzeugte Auswahlmöglichkeiten können pädagogisch zu leicht sein. Inhalte und Beispielfälle sind für Kinder mit unterschiedlichem Förderbedarf weiter zu überarbeiten.
+Bitte vor größeren Änderungen im Eltern-/Backup-Bereich eine Datensicherung erstellen.
+Das Löschen einer installierten Web-App unter iOS kann lokal gespeicherte Daten löschen.
+NRW-Quelllinks und das Suchen nach Updates benötigen weiterhin Internet.
