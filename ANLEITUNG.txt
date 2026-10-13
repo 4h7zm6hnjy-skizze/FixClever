@@ -1,18 +1,10 @@
-FixClever 1.7.0 – Offline-Version
+FixClever 1.8.0 – Lernhilfe + Offline
 
-EINMALIGER UPLOAD (3 Dateien):
-1. Diese ZIP entpacken.
-2. index.html, sw.js und manifest.webmanifest im Wurzelverzeichnis deines GitHub-Repositories hochladen.
-3. Bestehende index.html ersetzen; sw.js und manifest.webmanifest neu hinzufügen.
-4. Auf dem iPhone Safari öffnen und https://4h7zm6hnjy-skizze.github.io/FixClever/ besuchen.
-5. Mit dem Internet verbunden warten, bis oben „Offline bereit“ und „12 App-Dateien gespeichert“ steht.
-6. In Safari über Teilen > Zum Home-Bildschirm FixClever hinzufügen.
-7. Flugmodus einschalten und FixClever über das neue Symbol öffnen. Die Inhalte, Tests, Noten und Lernsterne funktionieren lokal.
+1. Lade index.html, sw.js und manifest.webmanifest in das HAUPTVERZEICHNIS deines GitHub-Repositorys FixClever hoch. Bestehende Dateien gleichen Namens ersetzen.
+2. Öffne https://4h7zm6hnjy-skizze.github.io/FixClever/ in Safari mit Internet.
+3. Warte auf „Offline bereit ...“ und prüfe, ob Version 1.8.0 angezeigt wird.
+4. Öffne ein Thema: Wähle „Schritt für Schritt“ oder „Alles auf einmal“.
+5. Prüfe den Offline-Start: Flugmodus aktivieren, Browser/Web-App schließen, über Homescreen erneut öffnen.
+6. Persönliche Daten, Profile und Statistiken bleiben im Browser lokal gespeichert. Nicht das Browserspeicher löschen.
 
-HINWEISE:
-- Vor der ersten erfolgreichen Offline-Speicherung wird Internet benötigt.
-- Änderungen an den GitHub-Dateien erreichen ein Offline-Gerät erst beim nächsten Online-Besuch.
-- Profile, Ergebnisse und Sterne liegen weiterhin lokal im Browser; Browserdaten löschen entfernt sie. Vorher Statistik sichern.
-- Links auf externe NRW-Lehrplan-Webseiten funktionieren offline nicht. Vorlesestimmen können abhängig vom Gerät Internet benötigen.
-- Safari/iOS kann Websitedaten bei Speichermangel löschen. Den Status „Offline bereit“ regelmäßig überprüfen.
-- Diese Version enthält unverändert 408 Lernthemen; sie erweitert hauptsächlich den Offline-Betrieb.
+Die neue Lernhilfe ist ein redaktioneller Zusatz zu den bestehenden Lerntexten. Sie ist keine Diagnose oder Garantie für individuellen Lernerfolg und ersetzt keine schulische Förderung.
