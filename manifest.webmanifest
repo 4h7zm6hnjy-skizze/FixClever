@@ -2,7 +2,7 @@
   "id": "./",
   "name": "FixClever – Dein Lernraum",
   "short_name": "FixClever",
-  "description": "Altersgerechte Lerninhalte, Tests und Lernstatistiken – nach dem ersten Online-Laden auch ohne Internet.",
+  "description": "FixClever 1.8.1: inklusive interaktiver Bruchkreise, anschaulicher Lernhilfe, Tests und Offline-Nutzung.",
   "lang": "de-DE",
   "start_url": "./index.html",
   "scope": "./",

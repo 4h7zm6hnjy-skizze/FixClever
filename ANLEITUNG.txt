@@ -1,10 +1,10 @@
-FixClever 1.8.0 – Lernhilfe + Offline
+FixClever 1.8.1 – Bruchkreise und Offline-Nutzung
 
-1. Lade index.html, sw.js und manifest.webmanifest in das HAUPTVERZEICHNIS deines GitHub-Repositorys FixClever hoch. Bestehende Dateien gleichen Namens ersetzen.
-2. Öffne https://4h7zm6hnjy-skizze.github.io/FixClever/ in Safari mit Internet.
-3. Warte auf „Offline bereit ...“ und prüfe, ob Version 1.8.0 angezeigt wird.
-4. Öffne ein Thema: Wähle „Schritt für Schritt“ oder „Alles auf einmal“.
-5. Prüfe den Offline-Start: Flugmodus aktivieren, Browser/Web-App schließen, über Homescreen erneut öffnen.
-6. Persönliche Daten, Profile und Statistiken bleiben im Browser lokal gespeichert. Nicht das Browserspeicher löschen.
+1. ZIP auf dem iPhone oder Computer entpacken.
+2. Die Dateien index.html, sw.js und manifest.webmanifest auf GitHub im Stammverzeichnis von FixClever ersetzen.
+3. Alle übrigen Dateien des Repositories unverändert lassen.
+4. FixClever einmal mit Internetverbindung in Safari öffnen und die Offline-Bereitmeldung abwarten.
+5. Mathematik, Klasse 4-6, Thema mit „Brüche“ öffnen und Kreise, Vergleich und Rechenarten testen.
+6. Zum Testen des Offline-Betriebs Flugmodus einschalten und über das Home-Bildschirm-Symbol neu starten.
 
-Die neue Lernhilfe ist ein redaktioneller Zusatz zu den bestehenden Lerntexten. Sie ist keine Diagnose oder Garantie für individuellen Lernerfolg und ersetzt keine schulische Förderung.
+WICHTIG: Kinderprofile und Lernstatistiken bleiben in den bestehenden Browser-Speicherschlüsseln und werden durch diese Dateiersetzung nicht gelöscht. Lokale Browserdaten nicht löschen. iOS kann bei Speichermangel Caches entfernen.
