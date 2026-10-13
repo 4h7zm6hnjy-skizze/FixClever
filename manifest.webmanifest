@@ -2,14 +2,26 @@
   "id": "./",
   "name": "FixClever – Dein Lernraum",
   "short_name": "FixClever",
-  "description": "FixClever 1.9.0: Mathe für Klasse 1–10 mit farbigen Bildhilfen, Bruchkreisen, Schritt-für-Schritt-Erklärungen und Offline-Lernen.",
+  "description": "FixClever 1.9.1: neues FC-App-Logo, anschauliche Mathe-Lernhilfen, Tests und vollständiger Offline-Kern.",
   "lang": "de-DE",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f8f3",
-  "theme_color": "#224d38",
+  "theme_color": "#08695f",
   "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "./icon.svg",
       "sizes": "any",
