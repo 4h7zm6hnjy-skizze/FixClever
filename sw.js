@@ -1,20 +1,22 @@
-/* FixClever 2.3.0 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
+/* FixClever 2.3.1 – vollständiger Kern-Cache; keine Profile oder Testantworten werden übertragen. */
 'use strict';
-const VERSION='2.3.0';
-const CACHE='fixclever-core-'+VERSION+'-lernstudio-v230-2026-10';
+const VERSION='2.3.1';
+const CACHE='fixclever-core-'+VERSION+'-startfix-offline-2026-10-13';
 const CORE=[
  './index.html', './',
- './style.css?v=2.3.0',
- './lessons.js?v=2.3.0',
- './questions.js?v=2.3.0',
- './curriculum-extra.js?v=2.3.0',
- './app.js?v=2.3.0',
- './subjects-extra.js?v=2.3.0',
- './quiz.js?v=2.3.0',
- './examples-extra.js?v=2.3.0',
+ './style.css?v=2.3.1',
+ './lessons.js?v=2.3.1',
+ './questions.js?v=2.3.1',
+ './curriculum-extra.js?v=2.3.1',
+ './app.js?v=2.3.1',
+ './subjects-extra.js?v=2.3.1',
+ './quiz.js?v=2.3.1',
+ './examples-extra.js?v=2.3.1',
  './icon.svg',
  './icon-192.png', './icon-512.png', './apple-touch-icon.png', './favicon-32.png',
- './manifest.webmanifest?v=2.3.0'
+ './fc231-inhalte.js?v=2.3.1', './fc231-faecher.js?v=2.3.1',
+ './fc231-tests.js?v=2.3.1', './fc231-lernhilfen.js?v=2.3.1',
+ './manifest.webmanifest?v=2.3.1'
 ];
 const urls=CORE.map(p=>new URL(p,self.registration.scope).href);
 const indexUrl=new URL('./index.html',self.registration.scope).href;
@@ -50,11 +52,12 @@ self.addEventListener('fetch',event=>{
  if(url.origin!==scope.origin||!url.pathname.startsWith(scope.pathname))return;
  if(request.mode==='navigate'){
    event.respondWith((async()=>{
+     const cache=await caches.open(CACHE);
+     // Schnell aus dem zuvor vollständig geprüften Offline-Cache starten.
+     const saved=await cache.match(indexUrl)||await cache.match(new URL('./',scope).href);
+     if(saved)return saved;
      try{return await fetch(request);}
-     catch{
-       const cache=await caches.open(CACHE);
-       return await cache.match(indexUrl)||await cache.match(new URL('./',scope).href)||new Response('FixClever: Offline-Inhalte noch nicht gespeichert.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
-     }
+     catch{return new Response('FixClever: Offline-Inhalte noch nicht gespeichert. Bitte einmal online öffnen.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});}
    })());
    return;
  }
