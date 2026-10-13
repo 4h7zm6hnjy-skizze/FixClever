@@ -1,14 +1,14 @@
-FixClever 2.3.2 – korrigierter Seitenaufbau
+FixClever 2.3.3 – START- UND OFFLINE-REPARATUR
 
-NUR diese drei Dateien im GitHub-Repo ersetzen:
-- index.html
-- sw.js
-- manifest.webmanifest
+Auf GitHub (Repository FixClever, Branch main) bitte alle VIER Dateien im ZIP
+auf der Hauptebene hochladen:
+  1. index.html (ersetzen)
+  2. sw.js (ersetzen)
+  3. manifest.webmanifest (ersetzen)
+  4. fc233-lernhilfen.js (NEU hinzufügen)
 
-Die bisherigen vier fc231-*.js Dateien und die übrigen Projektdateien NICHT löschen.
-
-Anschließend FixClever direkt in Safari mit Internet öffnen.
-Bestehende Profile und Statistiken bleiben lokal und werden nicht gelöscht.
-Falls „Startdiagnose“ erscheint, den Text fotografieren und mitteilen.
-
-Die Reparatur beseitigt eine Lade-Reihenfolgen-Abhängigkeit.
+Alle bisherigen fc231-*.js-Dateien sowie lessons.js, questions.js, app.js usw. bleiben erhalten.
+Zum Aktualisieren einmal online Safari öffnen, Offline speichern / prüfen drücken,
+danach die Seite ein zweites Mal neu öffnen. Die neue App zeigt den Ladefortschritt an.
+Keine Browserdaten löschen und die Home-Bildschirm-App nicht löschen, um die
+lokalen Lernprofile und Ergebnisse nicht zu verlieren.
